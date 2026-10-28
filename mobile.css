@@ -1,0 +1,79 @@
+/* Lectura cómoda y controles táctiles, sin cambiar la vista mensual de escritorio. */
+button, a, select { touch-action: manipulation; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid #c77b45; outline-offset: 3px;
+}
+.day-name { display: none; }
+.edit-slot-button { flex-shrink: 0; margin-left: auto; align-self: flex-end; width: 28px; height: 28px; border: 0; border-radius: 7px; color: var(--green); background: #ffffffb3; font-size: 18px; cursor: pointer; }
+.meal-dishes { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.meal-editor-dialog { border: 0; padding: 25px; border-radius: 18px; width: min(460px, calc(100vw - 24px)); color: var(--ink); box-shadow: 0 25px 80px #0003; }
+.meal-editor-dialog::backdrop { background: #18221bbd; }
+.meal-editor-content { display: grid; gap: 15px; }
+.meal-editor-content h2 { padding-right: 28px; font: 600 22px 'Playfair Display', serif; }
+.meal-editor-content label { display: grid; gap: 7px; font-size: 14px; font-weight: 600; }
+.meal-editor-content .editor-select { font-size: 16px; min-height: 48px; }
+.meal-editor-note { font-size: 13px; line-height: 1.5; color: var(--muted); }
+.meal-editor-content .primary-button { min-height: 48px; font-size: 15px; margin-top: 5px; }
+.close-button { width: 44px; height: 44px; top: 8px; right: 8px; }
+.manual-badge { font-size: 10px; color: #65745f; display: block; margin-top: 5px; font-weight: 400; }
+.recipe-dialog { max-height: calc(100dvh - 28px); }
+.recipe-body { overscroll-behavior: contain; }
+
+@media (max-width: 700px) {
+  body { font-size: 16px; }
+  .main-content { padding: calc(18px + env(safe-area-inset-top)) 14px calc(94px + env(safe-area-inset-bottom)); }
+  .sidebar { z-index: 50; height: calc(74px + env(safe-area-inset-bottom)); padding: 6px 10px calc(6px + env(safe-area-inset-bottom)); }
+  .sidebar nav { gap: 6px; }
+  .nav-item { min-height: 56px; padding: 7px 14px; font-size: 12px !important; gap: 2px; flex: 1; }
+  .nav-item span { font-size: 23px; }
+  .topbar .avatar { display: none; }
+  h1 { font-size: 31px; }
+  .eyebrow { font-size: 11px; }
+  .calendar-section { padding: 14px 10px; border-radius: 14px; }
+  .calendar-toolbar { gap: 14px; }
+  .month-controls { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; gap: 4px; }
+  .month-controls h2 { font-size: 22px; min-width: 0; }
+  .month-controls .today-button { grid-column: 1 / -1; justify-self: center; }
+  .icon-button { width: 44px; height: 44px; }
+  .today-button, .toolbar-actions button { min-height: 44px; font-size: 14px; }
+  .toolbar-actions { gap: 10px; }
+  .toolbar-actions button { flex: 1; }
+  .legend .legend-note { display: none; }
+  .legend { gap: 18px; font-size: 13px; margin: 0 3px 15px; }
+  .calendar-grid { display: grid; grid-template-columns: 1fr; gap: 12px; border: 0; }
+  .calendar-grid .weekday, .calendar-grid .empty, .calendar-grid .weekend { display: none; }
+  .calendar-grid .day-cell { min-height: 0; border: 1px solid var(--line); border-radius: 12px; padding: 11px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .calendar-grid .day-cell.empty, .calendar-grid .day-cell.weekend { display: none; }
+  .day-number { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 8px; font-size: 20px; font-weight: 700; color: var(--ink); margin: 0 0 2px; }
+  .day-name { display: inline; font-size: 14px; font-weight: 500; color: var(--muted); text-transform: capitalize; }
+  .meal-slot { margin: 0; padding: 12px 9px 8px 12px; min-height: 112px; gap: 8px; align-items: flex-start; flex-direction: column; }
+  .meal-dishes { font-size: 16px; line-height: 1.45; font-weight: 600; width: 100%; }
+  .meal-slot.empty-slot .meal-dishes { font-size: 14px; }
+  .edit-slot-button { width: 44px; height: 44px; margin-top: auto; font-size: 22px; }
+  .meal-slot.blocked { justify-content: center; }
+  .meal-slot.blocked .meal-dishes { font-size: 15px; }
+  .dish-link { padding: 2px 0; }
+  .footnote { font-size: 12px; line-height: 1.6; }
+  .today-date-card { padding: 22px 18px; }
+  .today-date-card h2 { font-size: 23px; line-height: 1.35; }
+  .today-meal-card { min-height: 160px; padding: 22px; }
+  .today-meal-label { font-size: 13px; }
+  .today-meal-dishes { font-size: 27px; line-height: 1.35; }
+  .today-dish-link { min-height: 44px; }
+  .recipes-section { margin-top: 0; padding: 17px 12px; }
+  .recipes-heading h2 { font-size: 23px; }
+  .recipe-filters input, .recipe-filters select { font-size: 16px; min-height: 48px; width: 100%; }
+  .recipe-list { grid-template-columns: 1fr; gap: 10px; }
+  .recipe-card { min-height: 80px; padding: 15px; gap: 8px; }
+  .recipe-card-title { font-size: 17px; }
+  .recipe-card-meta { font-size: 12px; }
+  .count-pill { font-size: 12px; flex-shrink: 0; }
+  .recipe-dialog { width: calc(100vw - 20px); padding: 25px 20px; }
+  .recipe-dialog h2 { padding-right: 25px; font-size: 30px; }
+  .recipe-meta { font-size: 12px; line-height: 1.6; }
+  .recipe-body { font-size: 17px; line-height: 1.75; max-height: 55dvh; }
+  .recipe-section-title { font-size: 19px; }
+  .recipe-subtitle { font-size: 16px; }
+  .dialog-footer span { font-size: 12px; line-height: 1.5; }
+  .alerts { font-size: 13px; line-height: 1.55; }
+}
