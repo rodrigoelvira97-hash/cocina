@@ -6,6 +6,16 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": false
   },
   {
+    "menuId": "MEN-2577CD8A",
+    "name": "Cóctel de Leche de tigre",
+    "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-840C5989",
+    "name": "Esferas de masa quebrada u hojaldre horneadas",
+    "calendarIncluded": false
+  },
+  {
     "menuId": "MEN-1C772E7F",
     "name": "Guacamole",
     "calendarIncluded": true
@@ -23,6 +33,11 @@ window.COCINA_CATALOG_OVERRIDES = [
   {
     "menuId": "MEN-51F9F0B5",
     "name": "Pico de gallo",
+    "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-4B75B922",
+    "name": "Te como los morros",
     "calendarIncluded": false
   }
 ];
