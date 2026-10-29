@@ -559,6 +559,93 @@ window.COCINA_FAMILY_BRANCHES = [
     "recipe": "Pincho de solomillo de cerdo"
   }
 ];
+window.COCINA_FAMILY_PATHS = [
+  {
+    "recipe": "Pincho de solomillo de cerdo",
+    "path": [
+      "Cerdo",
+      "Solomillo de cerdo"
+    ]
+  },
+  {
+    "recipe": "Arroz con atún/calamares",
+    "path": [
+      "Arroces"
+    ]
+  },
+  {
+    "recipe": "Paella",
+    "path": [
+      "Arroces"
+    ]
+  },
+  {
+    "recipe": "Tortellini champiñones y nata",
+    "path": [
+      "Pasta"
+    ]
+  },
+  {
+    "recipe": "Pasta con atún",
+    "path": [
+      "Pasta"
+    ]
+  },
+  {
+    "recipe": "Callos con garbanzos",
+    "path": [
+      "Carne"
+    ]
+  },
+  {
+    "recipe": "Morros con garbanzos",
+    "path": [
+      "Cerdo"
+    ]
+  },
+  {
+    "recipe": "Cocido madrileño",
+    "path": [
+      "Legumbres"
+    ]
+  },
+  {
+    "recipe": "Traseros pollo arroz",
+    "path": [
+      "Pollo"
+    ]
+  },
+  {
+    "recipe": "Pote asturiano",
+    "path": [
+      "Legumbres"
+    ]
+  },
+  {
+    "recipe": "Bocadillo",
+    "path": [
+      "Panes"
+    ]
+  },
+  {
+    "recipe": "Sandwich",
+    "path": [
+      "Panes"
+    ]
+  },
+  {
+    "recipe": "Boloñesa",
+    "path": [
+      "Pasta"
+    ]
+  },
+  {
+    "recipe": "Carbonara",
+    "path": [
+      "Pasta"
+    ]
+  }
+];
 window.COCINA_CONSULTATION_ENTRIES = [
   {
     "id": "CONSULTA-parrilla_tipo",

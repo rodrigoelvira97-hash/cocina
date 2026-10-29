@@ -43,10 +43,16 @@ const menuForApp=(()=>{const rows=[...catalog.menu];for(const addition of window
 function normalizeHeadingTitle(value){return String(value||'').normalize('NFD').replace(/\p{M}/gu,'').toLocaleLowerCase('es').replace(/[^\p{L}\p{N}]+/gu,' ').trim().split(/\s+/).filter(word=>!['de','del','la','el','los','las'].includes(word)).join(' ')}
 const recipeRules=window.COCINA_RECIPE_RULES||[];
 const familyBranches=window.COCINA_FAMILY_BRANCHES||[];
+const familyPaths=window.COCINA_FAMILY_PATHS||familyBranches.map(branch=>({recipe:branch.recipe,path:[branch.family,branch.subfamily]}));
+const familyNodeNames=[...new Set(familyPaths.flatMap(entry=>entry.path))];
+const familyWordTitles={Arroces:'Arroz'};
+function familyPathFor(name){return familyPaths.find(entry=>normalizeHeadingTitle(entry.recipe)===normalizeHeadingTitle(name))?.path||[]}
+function isFamilyNode(name){return familyNodeNames.some(title=>normalizeHeadingTitle(title)===normalizeHeadingTitle(name))}
+function matchesFamilyFilter(recipe,selected){const path=familyPathFor(recipe.name);return !selected||(!recipe.familyOnly&&(selected==='__pending__'?!path.length:path.some(name=>normalizeHeadingTitle(name)===normalizeHeadingTitle(selected))))}
 const consultationEntries=window.COCINA_CONSULTATION_ENTRIES||[];
 function recipeRuleFor(item){return recipeRules.find(rule=>normalizeHeadingTitle(rule.name)===normalizeHeadingTitle(item.name))||{}}
 const wordRelationships=window.COCINA_WORD_RELATIONSHIPS||[];
-const familyOnlyNames=new Set(['Aceites','Ajo','Arroz','Boquerones','Carne','Marisco','Patata','Pasta','Pescados','Pollo','Salsas','Tartar',...wordRelationships.filter(item=>item.kind==='family').map(item=>item.wordHeading),...recipeRules.filter(rule=>rule.contentKind==='family').map(rule=>rule.name),...familyBranches.flatMap(branch=>[branch.family,branch.subfamily])].map(normalizeHeadingTitle));
+const familyOnlyNames=new Set(['Aceites','Ajo','Arroz','Boquerones','Carne','Marisco','Patata','Pasta','Pescados','Pollo','Salsas','Tartar',...wordRelationships.filter(item=>item.kind==='family').map(item=>item.wordHeading),...recipeRules.filter(rule=>rule.contentKind==='family').map(rule=>rule.name),...familyNodeNames].map(normalizeHeadingTitle));
 function isFamilyOnlyName(name){return familyOnlyNames.has(normalizeHeadingTitle(name))}
 const calendarApprovals=window.COCINA_CATALOG_OVERRIDES||[];
 function calendarApprovalFor(item){return calendarApprovals.find(approval=>(!approval.menuId||approval.menuId===item.id||approval.menuId===item.sourceId)&&normalizeHeadingTitle(approval.name)===normalizeHeadingTitle(item.name))}
@@ -80,11 +86,14 @@ const recipes = menuForApp.map((item,index)=>{
   const approval=calendarApprovalFor(item),calendarIncluded=!familyOnly&&approval?.calendarIncluded!==false;
   return { ...item, id:`${item.id||item.recipeId||item.name}#${occurrence}`, sourceId:item.id, moment:item.moment, single:item.single, familyOnly, calendarIncluded, manualSingleAllowed:item.name.trim().toLocaleLowerCase('es')==='nachos', freq:item.freq, active:/^si$/i.test(item.active), category:sourceRecipe?.category||'', type:sourceRecipe?.type||'Pendiente de clasificación', linkStatus:sourceRecipe?.linkStatus||'', body, ...(item.name==='Carbonara'?{freq:'min 2',freqExact:2,onlyWeekday:5,minGapDays:7}:{}) };
 });
-const librarySources=[...catalog.recipes];
-for(const branch of familyBranches)for(const name of [branch.family,branch.subfamily])if(!librarySources.some(item=>normalizeHeadingTitle(item.name)===normalizeHeadingTitle(name)))librarySources.push({id:`FAMILY-${normalizeHeadingTitle(name).replaceAll(' ','-')}`,name,contentKind:'family',syntheticConsultation:true,eligible:'No',type:'Familia de recetas'});
+const librarySources=catalog.recipes.map(item=>{const canonical=familyNodeNames.find(name=>familyWordTitles[name]&&normalizeHeadingTitle(familyWordTitles[name])===normalizeHeadingTitle(item.name));return canonical?{...item,name:canonical}:item});
+for(const name of familyNodeNames)if(!librarySources.some(item=>normalizeHeadingTitle(item.name)===normalizeHeadingTitle(name)))librarySources.push({id:`FAMILY-${normalizeHeadingTitle(name).replaceAll(' ','-')}`,name,contentKind:'family',syntheticConsultation:true,eligible:'No',type:'Familia de recetas'});
 for(const entry of consultationEntries)if(!librarySources.some(item=>normalizeHeadingTitle(item.name)===normalizeHeadingTitle(entry.name)))librarySources.push({...entry,syntheticConsultation:true,eligible:'No',type:'Técnica de cocina'});
 const catalogRecipes=librarySources.map((source,index)=>{
-  const item={...source,...recipeRuleFor(source)},body=wordBodyFor(item.name);
+  const item={...source,...recipeRuleFor(source)};
+  if(isFamilyNode(item.name))item.contentKind='family';
+  const intro=catalog.headings.find(heading=>heading.level===1&&normalizeHeadingTitle(heading.title)===normalizeHeadingTitle(familyWordTitles[item.name]||item.name));
+  const body=isFamilyNode(item.name)?intro?.body?.trim()||'':wordBodyFor(item.name);
   const familyOnly=['family','technique','information'].includes(item.contentKind)||isFamilyOnlyName(item.name)||/categor[ií]a\s*\/\s*tema|informaci[oó]n/i.test(item.type||'');
   return {...item,body,familyOnly,category:familyOnly?'':item.category||'',id:item.id||`recipe-${index}`};
 });
@@ -202,14 +211,16 @@ function recipeContentHTML(body,title){
  flush();return html||'<p class="recipe-paragraph">No hay texto asociado.</p>'
 }
 function familyRelationsHTML(recipe){
- const groups=[],name=normalizeHeadingTitle(recipe.name);
- for(const branch of familyBranches){
-  if(name===normalizeHeadingTitle(branch.family))groups.push({label:'Subfamilias',names:[branch.subfamily]});
-  if(name===normalizeHeadingTitle(branch.subfamily))groups.push({label:'Familia',names:[branch.family]},{label:'Recetas',names:[branch.recipe]});
-  if(name===normalizeHeadingTitle(branch.recipe))groups.push({label:'Familia',names:[branch.family,branch.subfamily]});
+ const groups=new Map(),name=normalizeHeadingTitle(recipe.name);
+ const add=(label,names)=>{const entries=groups.get(label)||new Set();for(const title of names)entries.add(title);groups.set(label,entries)};
+ for(const entry of familyPaths){
+  if(name===normalizeHeadingTitle(entry.recipe))add('Familia',entry.path);
+  const index=entry.path.findIndex(title=>normalizeHeadingTitle(title)===name);
+  if(index<0)continue;
+  if(index>0)add('Familia',entry.path.slice(0,index));
+  if(index<entry.path.length-1)add('Subfamilias',[entry.path[index+1]]);else add('Recetas',[entry.recipe]);
  }
- const seen=new Set();
- return groups.map(group=>{const links=group.names.map(title=>catalogRecipes.find(item=>normalizeHeadingTitle(item.name)===normalizeHeadingTitle(title))).filter(Boolean).filter(item=>{const key=group.label+'|'+item.id;if(seen.has(key))return false;seen.add(key);return true});return links.length?`<nav class="recipe-family-group" aria-label="${escapeHTML(group.label)}"><span>${escapeHTML(group.label)}</span><div>${links.map(item=>`<button type="button" class="family-link" data-library-entry="${escapeHTML(item.id)}">${escapeHTML(item.name)}</button>`).join('<span class="family-separator" aria-hidden="true">›</span>')}</div></nav>`:''}).join('');
+ return [...groups].map(([label,names])=>{const links=[...names].map(title=>catalogRecipes.find(item=>normalizeHeadingTitle(item.name)===normalizeHeadingTitle(title))).filter(Boolean);const separator=label==='Familia'?'<span class="family-separator" aria-hidden="true">›</span>':'';return links.length?`<nav class="recipe-family-group" aria-label="${escapeHTML(label)}"><span>${escapeHTML(label)}</span><div>${links.map(item=>`<button type="button" class="family-link" data-library-entry="${escapeHTML(item.id)}">${escapeHTML(item.name)}</button>`).join(separator)}</div></nav>`:''}).join('');
 }
 function openRecipe(id){
  const r=recipes.find(item=>item.id===id)||catalogRecipes.find(item=>item.id===id);if(!r)return;
@@ -224,8 +235,10 @@ function openRecipe(id){
 }
 function renderRecipeLibrary(){
  const filter=$('#categoryFilter'),category=filter.value,categories=[...new Set(catalogRecipes.map(r=>r.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+ const familyFilter=$('#familyFilter'),family=familyFilter.value,families=[...familyNodeNames].sort((a,b)=>a.localeCompare(b,'es'));
+ familyFilter.innerHTML='<option value="">Todas las familias</option>'+families.map(name=>`<option value="${escapeHTML(name)}">${escapeHTML(name)}</option>`).join('')+'<option value="__pending__">Sin familia asignada</option>';familyFilter.value=family;
  filter.innerHTML='<option value="">Todas las categorías</option>'+categories.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');filter.value=category;
- const search=normalizeHeadingTitle($('#recipeSearch').value),found=catalogRecipes.filter(r=>(!category||r.category===category)&&(!search||normalizeHeadingTitle(`${r.name} ${r.category} ${r.type} ${r.body}`).includes(search))).sort((a,b)=>a.name.localeCompare(b.name,'es'));
+ const search=normalizeHeadingTitle($('#recipeSearch').value),found=catalogRecipes.filter(r=>(!category||r.category===category)&&matchesFamilyFilter(r,family)&&(!search||normalizeHeadingTitle(`${r.name} ${r.category} ${r.type} ${familyPathFor(r.name).join(' ')} ${r.body}`).includes(search))).sort((a,b)=>a.name.localeCompare(b.name,'es'));
  $('#recipeCount').textContent=`${found.length} entradas`;
  $('#recipeList').innerHTML=found.map(r=>`<button class="recipe-card" data-recipe="${r.id}"><span class="recipe-card-title">${escapeHTML(r.name)}</span><span class="recipe-card-meta">${escapeHTML(r.contentKind==='technique'?'Técnica de cocina':r.familyOnly?(r.contentKind==='family'?'Familia de recetas':'Familia / información'):r.category||r.type||'Sin clasificar')}</span></button>`).join('')||'<p class="empty-library">No hay resultados para esa búsqueda.</p>';
  $('#recipeList').querySelectorAll('[data-recipe]').forEach(el=>el.onclick=()=>openRecipe(el.dataset.recipe))
@@ -234,7 +247,7 @@ function ensureMonth(){const m=saved[`${viewed.getFullYear()}-${viewed.getMonth(
 $('#prevMonth').onclick=()=>{viewed.setMonth(viewed.getMonth()-1);ensureMonth()};$('#nextMonth').onclick=()=>{viewed.setMonth(viewed.getMonth()+1);ensureMonth()};$('#thisMonth').onclick=()=>{viewed=new Date();viewed.setDate(1);ensureMonth()};$('#generate').onclick=()=>generate(true);
 $('#clearMonth').onclick=()=>{const cal=monthData();cal.manual={};cal.schedule={};cal.deliberatelyCleared=true;cal.algorithmVersion=scheduleVersion;saved[`${viewed.getFullYear()}-${viewed.getMonth()+1}`]=cal;persist();render();showWarnings([])};
 $('#recipeBody').addEventListener('click',event=>{const link=event.target.closest('[data-library-entry]');if(link)openRecipe(link.dataset.libraryEntry)});
-$('#recipeSearch').addEventListener('input',renderRecipeLibrary);$('#categoryFilter').addEventListener('change',renderRecipeLibrary);
+$('#recipeSearch').addEventListener('input',renderRecipeLibrary);$('#categoryFilter').addEventListener('change',renderRecipeLibrary);$('#familyFilter').addEventListener('change',renderRecipeLibrary);
 const viewRoutes=['calendario','hoy','recetas'];
 let currentView='';
 function routeFromHash(){const route=location.hash.replace(/^#/,'').toLocaleLowerCase('es');return viewRoutes.includes(route)?route:(matchMedia('(max-width:700px)').matches?'hoy':'calendario')}
