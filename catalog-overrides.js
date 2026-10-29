@@ -181,6 +181,11 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": true
   },
   {
+    "menuId": "MEN-D07239ED",
+    "name": "Pure zanahoria",
+    "calendarIncluded": true
+  },
+  {
     "menuId": "MEN-F728444C",
     "name": "Pollo asado",
     "calendarIncluded": true
@@ -193,6 +198,21 @@ window.COCINA_CATALOG_OVERRIDES = [
   {
     "menuId": "MEN-24DA8BD8",
     "name": "Pure patata chorizo",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-126015E4",
+    "name": "Salchichas encebolladas",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-3220110A",
+    "name": "Salmorejo",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-579DB7D6",
+    "name": "Sandwich",
     "calendarIncluded": true
   },
   {
@@ -273,6 +293,16 @@ window.COCINA_CATALOG_OVERRIDES = [
   {
     "menuId": "MEN-1F3F390D",
     "name": "Pulpo",
+    "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-965CF84D",
+    "name": "Rollitos de bacón",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-0F51FE68",
+    "name": "Sardina ahumada",
     "calendarIncluded": false
   },
   {
