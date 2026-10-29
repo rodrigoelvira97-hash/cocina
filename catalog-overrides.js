@@ -266,6 +266,11 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": true
   },
   {
+    "menuId": "MEN-496D41D2",
+    "name": "Traseros pollo arroz",
+    "calendarIncluded": true
+  },
+  {
     "menuId": "MEN-84263B5B",
     "name": "Boquerones",
     "calendarIncluded": false
@@ -384,5 +389,35 @@ window.COCINA_CATALOG_OVERRIDES = [
     "menuId": "MEN-4B75B922",
     "name": "Te como los morros",
     "calendarIncluded": false
+  }
+];
+window.COCINA_WORD_RELATIONSHIPS = [
+  {
+    "kind": "variant",
+    "menuName": "Conejo",
+    "wordHeading": "Conejo al ajillo",
+    "description": "Conejo al ajillo es una preparación válida del plato Conejo; usar el nombre concreto al planificar, conservando las reglas del plato de origen."
+  },
+  {
+    "kind": "variant",
+    "menuName": "Conejo",
+    "wordHeading": "Conejo al salmorejo",
+    "description": "Conejo al salmorejo también es una preparación válida del plato Conejo; usar el nombre concreto al planificar, conservando las reglas del plato de origen."
+  },
+  {
+    "kind": "alias",
+    "menuName": "Fabes",
+    "wordHeading": "Fabada",
+    "description": "La entrada Fabes del calendario representa la receta Fabada del Word; vincularla a ese contenido sin duplicar el plato."
+  },
+  {
+    "kind": "family",
+    "wordHeading": "Huevos",
+    "description": "Huevos es un encabezado general para consultar distintas preparaciones; no añadir un plato genérico Huevos al calendario. Se mantienen Huevos con patatas y las tortillas ya aprobadas."
+  },
+  {
+    "kind": "family",
+    "wordHeading": "Salchichas",
+    "description": "Salchichas es el encabezado general del Word; la receta concreta del calendario es Salchichas encebolladas. No crear un segundo plato genérico Salchichas."
   }
 ];
