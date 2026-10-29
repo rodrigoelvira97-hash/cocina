@@ -21,8 +21,58 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": true
   },
   {
+    "menuId": "MEN-149627A6",
+    "name": "Callos con garbanzos",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-7B8248C4",
+    "name": "Canelones",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-A0E0A499",
+    "name": "Carbonara",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-70D9AC80",
+    "name": "Champiñones",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-29EAE5F6",
+    "name": "Chipirones",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-26A5BDAD",
+    "name": "Chuleta con espárragos",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-ECF78A19",
+    "name": "Chuletas con patatas",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-97A6CA0C",
+    "name": "Cocido madrileño",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-51390396",
+    "name": "Conejo",
+    "calendarIncluded": true
+  },
+  {
     "menuId": "MEN-84263B5B",
     "name": "Boquerones",
+    "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-C6119FBB",
+    "name": "Chuletón",
     "calendarIncluded": false
   },
   {
@@ -34,6 +84,16 @@ window.COCINA_CATALOG_OVERRIDES = [
     "menuId": "MEN-9F7A536C",
     "name": "Bravas",
     "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-E6CAF90C",
+    "name": "Ceviche",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-D159CF90",
+    "name": "Chorizo a la sidra",
+    "calendarIncluded": true
   },
   {
     "menuId": "MEN-2577CD8A",
