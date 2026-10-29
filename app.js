@@ -44,7 +44,7 @@ function normalizeHeadingTitle(value){return String(value||'').normalize('NFD').
 const recipeRules=window.COCINA_RECIPE_RULES||[];
 function recipeRuleFor(item){return recipeRules.find(rule=>normalizeHeadingTitle(rule.name)===normalizeHeadingTitle(item.name))||{}}
 const wordRelationships=window.COCINA_WORD_RELATIONSHIPS||[];
-const familyOnlyNames=new Set(['Aceites','Ajo','Arroz','Boquerones','Carne','Marisco','Patata','Pasta','Pescados','Pollo','Salsas','Tartar',...wordRelationships.filter(item=>item.kind==='family').map(item=>item.wordHeading)].map(normalizeHeadingTitle));
+const familyOnlyNames=new Set(['Aceites','Ajo','Arroz','Boquerones','Carne','Marisco','Patata','Pasta','Pescados','Pollo','Salsas','Tartar',...wordRelationships.filter(item=>item.kind==='family').map(item=>item.wordHeading),...recipeRules.filter(rule=>rule.contentKind==='family').map(rule=>rule.name)].map(normalizeHeadingTitle));
 function isFamilyOnlyName(name){return familyOnlyNames.has(normalizeHeadingTitle(name))}
 const calendarApprovals=window.COCINA_CATALOG_OVERRIDES||[];
 function calendarApprovalFor(item){return calendarApprovals.find(approval=>(!approval.menuId||approval.menuId===item.id||approval.menuId===item.sourceId)&&normalizeHeadingTitle(approval.name)===normalizeHeadingTitle(item.name))}
@@ -69,7 +69,7 @@ const $=s=>document.querySelector(s);
 const grid=$('#calendarGrid'), alertBox=$('#alerts');
 let viewed=new Date(); viewed.setDate(1);
 const storeKey='cocina-calendar-v1';
-const scheduleVersion=5;
+const scheduleVersion=6;
 let saved=JSON.parse(localStorage.getItem(storeKey)||'{}');
 function migrateSavedNachos(){const row=catalog.menu.find(r=>r.name.trim().toLocaleLowerCase('es')==='nachos'),canonical=row?`${row.id}#1`:'' ,legacy=row?`${row.id}#2`:'';if(!legacy)return;for(const month of Object.values(saved)){for(const [name,manual] of [['manual',true],['schedule',false]]){const entries=month?.[name];if(!entries)continue;for(const [k,ids] of Object.entries(entries)){if(!Array.isArray(ids))continue;if(manual)entries[k]=[...new Set(ids.map(id=>id===legacy?canonical:id))];else if(ids.includes(legacy)){entries[k]=ids.filter(id=>id!==legacy);month.needsRegeneration=true}}}}}
 migrateSavedNachos();
@@ -176,13 +176,13 @@ function recipeContentHTML(body,title){
  }
  flush();return html||'<p class="recipe-paragraph">No hay texto asociado.</p>'
 }
-function openRecipe(id){const r=recipes.find(x=>x.id===id)||catalogRecipes.find(x=>x.id===id);if(!r)return;$('#recipeTitle').textContent=r.name;$('#recipeMeta').textContent=[r.category,r.type,r.moment,r.single===undefined?'':(r.single?'Plato único':'Necesita acompañamiento'),r.linkStatus].filter(Boolean).join(' · ');const missing=r.body?'':catalog.headings.some(h=>normalizeHeadingTitle(h.title)===normalizeHeadingTitle(r.name))?'En el Word aparece este encabezado, pero no he encontrado texto asociado debajo. Puede ser una ficha pendiente de completar.':'No encuentro un encabezado equivalente en el Word importado. Puede estar con otro nombre o no estar todavía en la copia de trabajo.';$('#recipeBody').innerHTML=(r.preparationNote?`<p class="recipe-paragraph recipe-note">${escapeHTML(r.preparationNote)}</p>`:'')+(r.body||!r.preparationNote?recipeContentHTML(r.body||missing,r.name):'');$('#recipeDialog').showModal()}
+function openRecipe(id){const r=recipes.find(x=>x.id===id)||catalogRecipes.find(x=>x.id===id);if(!r)return;$('#recipeKind').textContent=r.familyOnly?(r.contentKind==='family'?'FAMILIA':'CONSULTA'):'RECETA';$('#recipeTitle').textContent=r.name;$('#recipeMeta').textContent=r.familyOnly?(r.contentKind==='family'?'Familia de recetas':'Familia / información'):[r.category,r.type,r.moment,r.single===undefined?'':(r.single?'Plato único':'Necesita acompañamiento'),r.linkStatus].filter(Boolean).join(' · ');const missing=r.body?'':catalog.headings.some(h=>normalizeHeadingTitle(h.title)===normalizeHeadingTitle(r.name))?'En el Word aparece este encabezado, pero no he encontrado texto asociado debajo. Puede ser una ficha pendiente de completar.':'No encuentro un encabezado equivalente en el Word importado. Puede estar con otro nombre o no estar todavía en la copia de trabajo.';$('#recipeBody').innerHTML=(r.preparationNote?`<p class="recipe-paragraph recipe-note">${escapeHTML(r.preparationNote)}</p>`:'')+(r.body||!r.preparationNote?recipeContentHTML(r.body||missing,r.name):'');$('#recipeDialog').showModal()}
 function renderRecipeLibrary(){
  const filter=$('#categoryFilter'),category=filter.value,categories=[...new Set(catalogRecipes.map(r=>r.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
  filter.innerHTML='<option value="">Todas las categorías</option>'+categories.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');filter.value=category;
  const search=normalizeHeadingTitle($('#recipeSearch').value),found=catalogRecipes.filter(r=>(!category||r.category===category)&&(!search||normalizeHeadingTitle(`${r.name} ${r.category} ${r.type} ${r.body}`).includes(search))).sort((a,b)=>a.name.localeCompare(b.name,'es'));
  $('#recipeCount').textContent=`${found.length} entradas`;
- $('#recipeList').innerHTML=found.map(r=>`<button class="recipe-card" data-recipe="${r.id}"><span class="recipe-card-title">${escapeHTML(r.name)}</span><span class="recipe-card-meta">${escapeHTML(r.familyOnly?'Familia / información':r.category||r.type||'Sin clasificar')}</span></button>`).join('')||'<p class="empty-library">No hay resultados para esa búsqueda.</p>';
+ $('#recipeList').innerHTML=found.map(r=>`<button class="recipe-card" data-recipe="${r.id}"><span class="recipe-card-title">${escapeHTML(r.name)}</span><span class="recipe-card-meta">${escapeHTML(r.familyOnly?(r.contentKind==='family'?'Familia de recetas':'Familia / información'):r.category||r.type||'Sin clasificar')}</span></button>`).join('')||'<p class="empty-library">No hay resultados para esa búsqueda.</p>';
  $('#recipeList').querySelectorAll('[data-recipe]').forEach(el=>el.onclick=()=>openRecipe(el.dataset.recipe))
 }
 function ensureMonth(){const m=saved[`${viewed.getFullYear()}-${viewed.getMonth()+1}`];const hasAssignments=Object.values(m?.schedule||{}).some(ids=>Array.isArray(ids)&&ids.length)||Object.values(m?.manual||{}).some(ids=>Array.isArray(ids)&&ids.length);if(!m?.deliberatelyCleared&&(!m?.schedule||m?.algorithmVersion!==scheduleVersion||m?.needsRegeneration||!hasAssignments))generate();else{render();showWarnings([])}}

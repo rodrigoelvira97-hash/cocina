@@ -228,7 +228,7 @@ window.COCINA_CATALOG_OVERRIDES = [
   {
     "menuId": "MEN-B754598B",
     "name": "Solomillo de cerdo",
-    "calendarIncluded": true
+    "calendarIncluded": false
   },
   {
     "menuId": "MEN-C6F074F8",
@@ -433,11 +433,39 @@ window.COCINA_RECIPE_RULES = [
     "preparationNote": "Puedes prepararlo con atún, con calamares o con ambos."
   },
   {
+    "name": "Gazpacho",
+    "moment": "Cena",
+    "single": false
+  },
+  {
+    "name": "Salmorejo",
+    "moment": "Cena",
+    "single": false
+  },
+  {
+    "name": "Solomillo de cerdo",
+    "contentKind": "family"
+  },
+  {
     "name": "Alitas",
     "preparationNote": "La preparación de las alitas queda a tu elección."
   },
   {
+    "name": "Chorizo a la sidra",
+    "moment": "Cena",
+    "single": false
+  },
+  {
     "name": "Guacamole",
+    "moment": "Cena",
+    "single": false
+  },
+  {
+    "name": "Mejillones",
+    "preparationNote": "Elige la preparación: al vapor, en escabeche o cabreados. Todas comparten la frecuencia de Mejillones."
+  },
+  {
+    "name": "Rollitos de bacón",
     "moment": "Cena",
     "single": false
   },
