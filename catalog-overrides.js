@@ -411,6 +411,12 @@ window.COCINA_WORD_RELATIONSHIPS = [
     "description": "La entrada Fabes del calendario representa la receta Fabada del Word; vincularla a ese contenido sin duplicar el plato."
   },
   {
+    "kind": "alias",
+    "menuName": "Gambas",
+    "wordHeading": "Gambas al ajillo",
+    "description": "La entrada Gambas del calendario representa la receta Gambas al ajillo del Word; vincularla a ese contenido sin duplicar el plato."
+  },
+  {
     "kind": "family",
     "wordHeading": "Huevos",
     "description": "Huevos es un encabezado general para consultar distintas preparaciones; no añadir un plato genérico Huevos al calendario. Se mantienen Huevos con patatas y las tortillas ya aprobadas."

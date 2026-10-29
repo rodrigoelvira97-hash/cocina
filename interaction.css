@@ -7,3 +7,5 @@
 @media(max-width:700px){.meal-slot{padding:7px 4px 7px 7px;min-height:40px}.meal-dishes{font-size:10px;line-height:1.25}.meal-slot.empty-slot .meal-dishes{font-size:9px}.day-cell{min-height:133px}}
 @media(max-width:700px){.recipes-section{padding:15px 11px}.recipe-filters{grid-template-columns:1fr}.recipe-list{grid-template-columns:repeat(2,minmax(0,1fr))}.recipe-card{padding:10px;min-height:65px}.recipe-card-title{font-size:11px}}
 @media(max-width:700px){.today-date-card{padding:17px}.today-date-card h2{font-size:18px}.today-meal-cards{grid-template-columns:1fr}.today-meal-card{min-height:135px;padding:17px}.today-meal-dishes{font-size:19px}}
+
+.recipe-note{padding:11px 13px;border-left:3px solid var(--orange);border-radius:0 7px 7px 0;background:var(--orange-soft);margin:12px 0;line-height:1.65}
