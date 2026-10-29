@@ -211,8 +211,43 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": true
   },
   {
+    "menuId": "MEN-BB0ED6D5",
+    "name": "Sepia",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-7433B712",
+    "name": "Setas",
+    "calendarIncluded": true
+  },
+  {
     "menuId": "MEN-579DB7D6",
     "name": "Sandwich",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-B754598B",
+    "name": "Solomillo de cerdo",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-C6F074F8",
+    "name": "Sopa ajo (castellana)",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-176F21F1",
+    "name": "Sopa Brick",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-8BF3C6A7",
+    "name": "Sopa Cebolla",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-D782114A",
+    "name": "Tacos",
     "calendarIncluded": true
   },
   {
@@ -223,6 +258,11 @@ window.COCINA_CATALOG_OVERRIDES = [
   {
     "menuId": "MEN-C6119FBB",
     "name": "Chuletón",
+    "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-D6EC40FE",
+    "name": "T-Bone",
     "calendarIncluded": false
   },
   {
@@ -304,6 +344,11 @@ window.COCINA_CATALOG_OVERRIDES = [
     "menuId": "MEN-0F51FE68",
     "name": "Sardina ahumada",
     "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-3721F698",
+    "name": "Tartar de Atún",
+    "calendarIncluded": true
   },
   {
     "menuId": "MEN-4B75B922",
