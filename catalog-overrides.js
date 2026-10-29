@@ -251,6 +251,21 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": true
   },
   {
+    "menuId": "MEN-7F69154A",
+    "name": "Tortellini champiñones y nata",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-AF443EB4",
+    "name": "Tortilla francesa",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-17DD28DA",
+    "name": "Tortilla patata",
+    "calendarIncluded": true
+  },
+  {
     "menuId": "MEN-84263B5B",
     "name": "Boquerones",
     "calendarIncluded": false
@@ -348,6 +363,21 @@ window.COCINA_CATALOG_OVERRIDES = [
   {
     "menuId": "MEN-3721F698",
     "name": "Tartar de Atún",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-CD0D0CED",
+    "name": "Tartar de Carne",
+    "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-1782AAE6",
+    "name": "Tartar de fuet",
+    "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-91276F1A",
+    "name": "Tartar de Salmón",
     "calendarIncluded": true
   },
   {
