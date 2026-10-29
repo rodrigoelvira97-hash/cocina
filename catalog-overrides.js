@@ -131,6 +131,56 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": true
   },
   {
+    "menuId": "MEN-20A910A4",
+    "name": "Muslos pollo al curry",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-BD5B420F",
+    "name": "Nachos",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-B94C0F1C",
+    "name": "Paella",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-9591889C",
+    "name": "Papas a la riojana",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-9611F9B4",
+    "name": "Pasta con atún",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-1E92375D",
+    "name": "Perritos calientes",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-6205A16E",
+    "name": "Pimientos rellenos",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-1F6CCD2B",
+    "name": "Pizza",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-F728444C",
+    "name": "Pollo asado",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-93DDBF5E",
+    "name": "Provolone",
+    "calendarIncluded": true
+  },
+  {
     "menuId": "MEN-84263B5B",
     "name": "Boquerones",
     "calendarIncluded": false
@@ -198,6 +248,16 @@ window.COCINA_CATALOG_OVERRIDES = [
   {
     "menuId": "MEN-51F9F0B5",
     "name": "Pico de gallo",
+    "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-C6756E10",
+    "name": "Pincho de solomillo de cerdo",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-1F3F390D",
+    "name": "Pulpo",
     "calendarIncluded": false
   },
   {
