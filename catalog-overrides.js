@@ -66,6 +66,71 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": true
   },
   {
+    "menuId": "MEN-047762CC",
+    "name": "Ensalada",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-817B40F4",
+    "name": "Entraña",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-D2DD3D9A",
+    "name": "Fabes",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-D880097A",
+    "name": "Fideos con caballa",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-03D0D732",
+    "name": "Gambas",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-21A15EF2",
+    "name": "Gazpacho",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-9A1E795A",
+    "name": "Hamburguesa",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-E9477DA0",
+    "name": "Huevos con patatas",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-DD4AE5DF",
+    "name": "Lasaña",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-54451846",
+    "name": "Lentejas",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-00F20E38",
+    "name": "Magro cerdo y patatas",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-7BCE9DFE",
+    "name": "Migas del pastor",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-B4C5E5E5",
+    "name": "Morros con garbanzos",
+    "calendarIncluded": true
+  },
+  {
     "menuId": "MEN-84263B5B",
     "name": "Boquerones",
     "calendarIncluded": false
@@ -116,8 +181,18 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": false
   },
   {
+    "menuId": "MEN-D42C123A",
+    "name": "Mejillones",
+    "calendarIncluded": true
+  },
+  {
     "menuId": "MEN-19ED92CE",
     "name": "Mojo picón",
+    "calendarIncluded": false
+  },
+  {
+    "menuId": "MEN-D178B99B",
+    "name": "Morros",
     "calendarIncluded": false
   },
   {
