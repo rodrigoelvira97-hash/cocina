@@ -425,6 +425,31 @@ window.COCINA_WORD_RELATIONSHIPS = [
     "kind": "family",
     "wordHeading": "Salchichas",
     "description": "Salchichas es el encabezado general del Word; la receta concreta del calendario es Salchichas encebolladas. No crear un segundo plato genérico Salchichas."
+  },
+  {
+    "kind": "sections",
+    "menuName": "Pincho de solomillo de cerdo",
+    "wordParent": "Solomillo de cerdo",
+    "wordSections": [
+      "Preparado del solomillo:",
+      "Pincho:"
+    ],
+    "ingredients": [
+      "Solomillo de cerdo",
+      "Ajo en polvo",
+      "Pimienta negra",
+      "Vino blanco",
+      "Tosta de pan",
+      "Queso rallado",
+      "Cebolla blanca",
+      "Jalapeño",
+      "Huevo de codorniz"
+    ],
+    "note": "Ingredientes identificados en el texto de preparación. Las cantidades siguen pendientes de completar.",
+    "sectionLabels": {
+      "Preparado del solomillo:": "Preparación del solomillo",
+      "Pincho:": "Montaje del pincho"
+    }
   }
 ];
 window.COCINA_RECIPE_RULES = [
@@ -462,7 +487,14 @@ window.COCINA_RECIPE_RULES = [
   },
   {
     "name": "Mejillones",
+    "moment": "Cena",
+    "single": false,
     "preparationNote": "Elige la preparación: al vapor, en escabeche o cabreados. Todas comparten la frecuencia de Mejillones."
+  },
+  {
+    "name": "Pincho de solomillo de cerdo",
+    "moment": "Cena",
+    "single": false
   },
   {
     "name": "Rollitos de bacón",
@@ -518,5 +550,19 @@ window.COCINA_MENU_ADDITIONS = [
     "single": false,
     "freq": "max 1",
     "active": "Si"
+  }
+];
+window.COCINA_FAMILY_BRANCHES = [
+  {
+    "family": "Cerdo",
+    "subfamily": "Solomillo de cerdo",
+    "recipe": "Pincho de solomillo de cerdo"
+  }
+];
+window.COCINA_CONSULTATION_ENTRIES = [
+  {
+    "id": "CONSULTA-parrilla_tipo",
+    "name": "Parrilla",
+    "contentKind": "technique"
   }
 ];
