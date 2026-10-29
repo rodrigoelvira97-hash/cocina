@@ -39,8 +39,10 @@ const demoRecipes = [
   {id:'MEN-17DD28DA',name:'Tortilla patata',moment:'Cena',single:true,freq:'2'}
 ];
 const catalog = window.COCINA_DATA || { menu: demoRecipes, recipes: [], headings: [], wordText: '' };
-const menuForApp=(()=>{const rows=[...catalog.menu],nachos=rows.filter(r=>r.name.trim().toLocaleLowerCase('es')==='nachos');if(!nachos.length)return rows;let replaced=false;return rows.flatMap(r=>{if(r.name.trim().toLocaleLowerCase('es')!=='nachos')return [r];if(replaced)return [];replaced=true;return [{...r,moment:'Cena',single:false,freq:'max 2',active:nachos.some(x=>/^si$/i.test(x.active))?'Si':'No',notes:'Regla consolidada para la app: máximo 2 al mes, solo cena; automático requiere pareja. Manualmente puede quedar como plato único.'}]})})();
+const menuForApp=(()=>{const rows=[...catalog.menu];for(const addition of window.COCINA_MENU_ADDITIONS||[]){if(!rows.some(row=>row.recipeId===addition.recipeId||normalizeHeadingTitle(row.name)===normalizeHeadingTitle(addition.name)))rows.push(addition)}const nachos=rows.filter(r=>r.name.trim().toLocaleLowerCase('es')==='nachos');if(!nachos.length)return rows;let replaced=false;return rows.flatMap(r=>{if(r.name.trim().toLocaleLowerCase('es')!=='nachos')return [r];if(replaced)return [];replaced=true;return [{...r,moment:'Cena',single:false,freq:'max 2',active:nachos.some(x=>/^si$/i.test(x.active))?'Si':'No',notes:'Regla consolidada para la app: máximo 2 al mes, solo cena; automático requiere pareja. Manualmente puede quedar como plato único.'}]})})();
 function normalizeHeadingTitle(value){return String(value||'').normalize('NFD').replace(/\p{M}/gu,'').toLocaleLowerCase('es').replace(/[^\p{L}\p{N}]+/gu,' ').trim().split(/\s+/).filter(word=>!['de','del','la','el','los','las'].includes(word)).join(' ')}
+const recipeRules=window.COCINA_RECIPE_RULES||[];
+function recipeRuleFor(item){return recipeRules.find(rule=>normalizeHeadingTitle(rule.name)===normalizeHeadingTitle(item.name))||{}}
 const wordRelationships=window.COCINA_WORD_RELATIONSHIPS||[];
 const familyOnlyNames=new Set(['Aceites','Ajo','Arroz','Boquerones','Carne','Marisco','Patata','Pasta','Pescados','Pollo','Salsas','Tartar',...wordRelationships.filter(item=>item.kind==='family').map(item=>item.wordHeading)].map(normalizeHeadingTitle));
 function isFamilyOnlyName(name){return familyOnlyNames.has(normalizeHeadingTitle(name))}
@@ -49,6 +51,7 @@ function calendarApprovalFor(item){return calendarApprovals.find(approval=>(!app
 function wordBodyFor(name){const alias=wordRelationships.find(item=>item.kind==='alias'&&normalizeHeadingTitle(item.menuName)===normalizeHeadingTitle(name));const target=normalizeHeadingTitle(alias?.wordHeading||name),matches=[];catalog.headings.forEach((h,index)=>{if(normalizeHeadingTitle(h.title)===target)matches.push(index)});if(!matches.length)catalog.headings.forEach((h,index)=>{if(h.parent&&normalizeHeadingTitle(`${h.parent} ${h.title}`)===target)matches.push(index)});if(!matches.length)return '';const subtreeLength=index=>{const root=catalog.headings[index];let total=0;for(let i=index;i<catalog.headings.length;i++){const h=catalog.headings[i];if(i>index&&h.level<=root.level)break;total+=(h.body||'').length}return total};const collect=index=>{const root=catalog.headings[index],parts=[];let hasText=false;for(let i=index;i<catalog.headings.length;i++){const h=catalog.headings[i];if(i>index&&h.level<=root.level)break;if(h.body?.trim())hasText=true;if(i===index){if(h.body?.trim())parts.push(h.body.trim());continue}if(h.title?.trim())parts.push(h.title.trim());if(h.body?.trim())parts.push(h.body.trim())}return hasText?parts.join('\n').trim():''};const rootIndex=matches.sort((a,b)=>subtreeLength(b)-subtreeLength(a))[0],direct=collect(rootIndex);if(direct)return direct;const root=catalog.headings[rootIndex],parentName=root.parent;if(!parentName)return '';const parentIndex=catalog.headings.findIndex(h=>normalizeHeadingTitle(h.title)===normalizeHeadingTitle(parentName));if(parentIndex<0)return '';const sharedSection=/^(ingrediente|ingredientes|preparado|preparada|preparacion|elaboracion|procedimiento|pasos?|limpieza|montado|montaje|recomendaciones|consejos|notas?)(\s|$)/;const shared=[];for(let i=parentIndex+1;i<catalog.headings.length;i++){const h=catalog.headings[i];if(h.level<=catalog.headings[parentIndex].level)break;if(h.level===root.level&&sharedSection.test(normalizeHeadingTitle(h.title))){const section=collect(i);if(section)shared.push(`${h.title.replace(/:\s*$/,'')}:\n${section}`)}}return shared.join('\n').trim()}
 const menuNames = new Map();
 const recipes = menuForApp.map((item,index)=>{
+  item={...item,...recipeRuleFor(item)};
   const occurrence=(menuNames.get(item.id)||0)+1;menuNames.set(item.id,occurrence);
   const sourceRecipe=catalog.recipes.find(r=>r.id===item.recipeId)||catalog.recipes.find(r=>r.name===item.name);
   const body=wordBodyFor(item.name);
@@ -58,7 +61,7 @@ const recipes = menuForApp.map((item,index)=>{
 });
 const catalogRecipes=catalog.recipes.map((item,index)=>{
   const body=wordBodyFor(item.name);
-  return {...item,body,familyOnly:isFamilyOnlyName(item.name)||/categor[ií]a\s*\/\s*tema|informaci[oó]n/i.test(item.type||''),id:item.id||`recipe-${index}`};
+  return {...item,...recipeRuleFor(item),body,familyOnly:isFamilyOnlyName(item.name)||/categor[ií]a\s*\/\s*tema|informaci[oó]n/i.test(item.type||''),id:item.id||`recipe-${index}`};
 });
 const weekdays=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
 const monthNames=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -66,7 +69,7 @@ const $=s=>document.querySelector(s);
 const grid=$('#calendarGrid'), alertBox=$('#alerts');
 let viewed=new Date(); viewed.setDate(1);
 const storeKey='cocina-calendar-v1';
-const scheduleVersion=4;
+const scheduleVersion=5;
 let saved=JSON.parse(localStorage.getItem(storeKey)||'{}');
 function migrateSavedNachos(){const row=catalog.menu.find(r=>r.name.trim().toLocaleLowerCase('es')==='nachos'),canonical=row?`${row.id}#1`:'' ,legacy=row?`${row.id}#2`:'';if(!legacy)return;for(const month of Object.values(saved)){for(const [name,manual] of [['manual',true],['schedule',false]]){const entries=month?.[name];if(!entries)continue;for(const [k,ids] of Object.entries(entries)){if(!Array.isArray(ids))continue;if(manual)entries[k]=[...new Set(ids.map(id=>id===legacy?canonical:id))];else if(ids.includes(legacy)){entries[k]=ids.filter(id=>id!==legacy);month.needsRegeneration=true}}}}}
 migrateSavedNachos();
@@ -173,7 +176,7 @@ function recipeContentHTML(body,title){
  }
  flush();return html||'<p class="recipe-paragraph">No hay texto asociado.</p>'
 }
-function openRecipe(id){const r=recipes.find(x=>x.id===id)||catalogRecipes.find(x=>x.id===id);if(!r)return;$('#recipeTitle').textContent=r.name;$('#recipeMeta').textContent=[r.category,r.type,r.moment,r.single===undefined?'':(r.single?'Plato único':'Necesita acompañamiento'),r.linkStatus].filter(Boolean).join(' · ');const missing=r.body?'':catalog.headings.some(h=>normalizeHeadingTitle(h.title)===normalizeHeadingTitle(r.name))?'En el Word aparece este encabezado, pero no he encontrado texto asociado debajo. Puede ser una ficha pendiente de completar.':'No encuentro un encabezado equivalente en el Word importado. Puede estar con otro nombre o no estar todavía en la copia de trabajo.';$('#recipeBody').innerHTML=recipeContentHTML(r.body||missing,r.name);$('#recipeDialog').showModal()}
+function openRecipe(id){const r=recipes.find(x=>x.id===id)||catalogRecipes.find(x=>x.id===id);if(!r)return;$('#recipeTitle').textContent=r.name;$('#recipeMeta').textContent=[r.category,r.type,r.moment,r.single===undefined?'':(r.single?'Plato único':'Necesita acompañamiento'),r.linkStatus].filter(Boolean).join(' · ');const missing=r.body?'':catalog.headings.some(h=>normalizeHeadingTitle(h.title)===normalizeHeadingTitle(r.name))?'En el Word aparece este encabezado, pero no he encontrado texto asociado debajo. Puede ser una ficha pendiente de completar.':'No encuentro un encabezado equivalente en el Word importado. Puede estar con otro nombre o no estar todavía en la copia de trabajo.';$('#recipeBody').innerHTML=(r.preparationNote?`<p class="recipe-paragraph recipe-note">${escapeHTML(r.preparationNote)}</p>`:'')+(r.body||!r.preparationNote?recipeContentHTML(r.body||missing,r.name):'');$('#recipeDialog').showModal()}
 function renderRecipeLibrary(){
  const filter=$('#categoryFilter'),category=filter.value,categories=[...new Set(catalogRecipes.map(r=>r.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
  filter.innerHTML='<option value="">Todas las categorías</option>'+categories.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');filter.value=category;

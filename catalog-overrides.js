@@ -427,3 +427,68 @@ window.COCINA_WORD_RELATIONSHIPS = [
     "description": "Salchichas es el encabezado general del Word; la receta concreta del calendario es Salchichas encebolladas. No crear un segundo plato genérico Salchichas."
   }
 ];
+window.COCINA_RECIPE_RULES = [
+  {
+    "name": "Arroz con atún/calamares",
+    "preparationNote": "Puedes prepararlo con atún, con calamares o con ambos."
+  },
+  {
+    "name": "Alitas",
+    "preparationNote": "La preparación de las alitas queda a tu elección."
+  },
+  {
+    "name": "Guacamole",
+    "moment": "Cena",
+    "single": false
+  },
+  {
+    "name": "Fabes con almejas",
+    "moment": "Comida",
+    "single": true,
+    "freq": "max 1"
+  },
+  {
+    "name": "Pote asturiano",
+    "moment": "Comida",
+    "single": true,
+    "freq": "max 1"
+  },
+  {
+    "name": "Gambones a la plancha",
+    "moment": "Cena",
+    "single": false,
+    "freq": "max 1"
+  }
+];
+window.COCINA_MENU_ADDITIONS = [
+  {
+    "id": "ADD-REC-C125D629",
+    "recipeId": "REC-C125D629",
+    "auditLibraryId": "REC-C125D629",
+    "name": "Fabes con almejas",
+    "moment": "Comida",
+    "single": true,
+    "freq": "max 1",
+    "active": "Si"
+  },
+  {
+    "id": "ADD-REC-E4719D11",
+    "recipeId": "REC-E4719D11",
+    "auditLibraryId": "REC-E4719D11",
+    "name": "Pote asturiano",
+    "moment": "Comida",
+    "single": true,
+    "freq": "max 1",
+    "active": "Si"
+  },
+  {
+    "id": "ADD-REC-D8BF21F7",
+    "recipeId": "REC-D8BF21F7",
+    "auditLibraryId": "REC-D8BF21F7",
+    "name": "Gambones a la plancha",
+    "moment": "Cena",
+    "single": false,
+    "freq": "max 1",
+    "active": "Si"
+  }
+];
