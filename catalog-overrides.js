@@ -171,6 +171,16 @@ window.COCINA_CATALOG_OVERRIDES = [
     "calendarIncluded": true
   },
   {
+    "menuId": "MEN-AD8404B4",
+    "name": "Pure calabacin",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-1A04D6FB",
+    "name": "Pure calabaza",
+    "calendarIncluded": true
+  },
+  {
     "menuId": "MEN-F728444C",
     "name": "Pollo asado",
     "calendarIncluded": true
@@ -178,6 +188,11 @@ window.COCINA_CATALOG_OVERRIDES = [
   {
     "menuId": "MEN-93DDBF5E",
     "name": "Provolone",
+    "calendarIncluded": true
+  },
+  {
+    "menuId": "MEN-24DA8BD8",
+    "name": "Pure patata chorizo",
     "calendarIncluded": true
   },
   {
