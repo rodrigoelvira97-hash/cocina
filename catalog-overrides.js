@@ -458,9 +458,17 @@ window.COCINA_RECIPE_RULES = [
     "preparationNote": "Puedes prepararlo con atún, con calamares o con ambos."
   },
   {
+    "name": "Ensalada",
+    "preparationNote": "Ensalada genérica. Los tipos y la preparación quedan pendientes de desarrollar."
+  },
+  {
     "name": "Gazpacho",
     "moment": "Cena",
     "single": false
+  },
+  {
+    "name": "Pimientos rellenos",
+    "preparationNote": "El pimiento es el protagonista. El relleno queda pendiente de concretar."
   },
   {
     "name": "Salmorejo",
@@ -470,6 +478,10 @@ window.COCINA_RECIPE_RULES = [
   {
     "name": "Solomillo de cerdo",
     "contentKind": "family"
+  },
+  {
+    "name": "Sopa Brick",
+    "preparationNote": "Comida de supervivencia."
   },
   {
     "name": "Alitas",
@@ -565,85 +577,442 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Cerdo",
       "Solomillo de cerdo"
-    ]
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Tacos de pollo",
+    "path": [
+      "Pollo"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Tacos de carne picada",
+    "path": [
+      "Carne"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Tacos de carne desmechada",
+    "path": [
+      "Carne"
+    ],
+    "classification": "rule"
   },
   {
     "recipe": "Arroz con atún/calamares",
     "path": [
       "Arroces"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Paella",
     "path": [
       "Arroces"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Tortellini champiñones y nata",
     "path": [
       "Pasta"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Pasta con atún",
     "path": [
       "Pasta"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Callos con garbanzos",
     "path": [
       "Carne"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Morros con garbanzos",
     "path": [
       "Cerdo"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Cocido madrileño",
     "path": [
       "Legumbres"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Traseros pollo arroz",
     "path": [
       "Pollo"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Pote asturiano",
     "path": [
       "Legumbres"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Bocadillo",
     "path": [
       "Panes"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Sandwich",
     "path": [
       "Panes"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Boloñesa",
     "path": [
       "Pasta"
-    ]
+    ],
+    "classification": "confirmed"
   },
   {
     "recipe": "Carbonara",
     "path": [
       "Pasta"
-    ]
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Pizza",
+    "path": [
+      "Masas y harinas"
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Hamburguesa",
+    "path": [
+      "Carne"
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Perritos calientes",
+    "path": [
+      "Salchichas"
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Tortilla patata",
+    "path": [
+      "Huevos"
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Sopa Brick",
+    "path": [
+      "Sopas"
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Canelones",
+    "path": [
+      "Pasta"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Lasaña",
+    "path": [
+      "Pasta"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Fideos con caballa",
+    "path": [
+      "Pasta"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Alitas",
+    "path": [
+      "Pollo"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Pollo asado",
+    "path": [
+      "Pollo"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Muslos pollo al curry",
+    "path": [
+      "Pollo"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Lentejas",
+    "path": [
+      "Legumbres"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Fabes",
+    "path": [
+      "Legumbres"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Fabes con almejas",
+    "path": [
+      "Legumbres"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Chipirones",
+    "path": [
+      "Marisco"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Gambas",
+    "path": [
+      "Marisco"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Gambones a la plancha",
+    "path": [
+      "Marisco"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Mejillones",
+    "path": [
+      "Marisco"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Sepia",
+    "path": [
+      "Marisco"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Magro cerdo y patatas",
+    "path": [
+      "Cerdo"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Albóndigas",
+    "path": [
+      "Carne"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Chuleta con espárragos",
+    "path": [
+      "Carne"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Chuletas con patatas",
+    "path": [
+      "Carne"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Entraña",
+    "path": [
+      "Carne"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Conejo",
+    "path": [
+      "Carne"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Champiñones",
+    "path": [
+      "Setas y champiñones"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Setas",
+    "path": [
+      "Setas y champiñones"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Pure calabacin",
+    "path": [
+      "Verduras"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Pure calabaza",
+    "path": [
+      "Verduras"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Pure zanahoria",
+    "path": [
+      "Verduras"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Papas a la riojana",
+    "path": [
+      "Patatas"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Pure patata chorizo",
+    "path": [
+      "Patatas"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Tortilla francesa",
+    "path": [
+      "Huevos"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Huevos con patatas",
+    "path": [
+      "Huevos"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Sopa ajo (castellana)",
+    "path": [
+      "Sopas"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Sopa Cebolla",
+    "path": [
+      "Sopas"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Migas del pastor",
+    "path": [
+      "Panes"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Ceviche",
+    "path": [
+      "Pescados"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Tartar de Atún",
+    "path": [
+      "Pescados"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Tartar de Salmón",
+    "path": [
+      "Pescados"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Provolone",
+    "path": [
+      "Quesos"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Chorizo a la sidra",
+    "path": [
+      "Chorizos"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Salchichas encebolladas",
+    "path": [
+      "Salchichas"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Guacamole",
+    "path": [
+      "Aguacates"
+    ],
+    "classification": "rule"
+  },
+  {
+    "recipe": "Ensalada",
+    "path": [
+      "Ensaladas"
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Pimientos rellenos",
+    "path": [
+      "Verduras"
+    ],
+    "classification": "confirmed"
   }
 ];
 window.COCINA_CONSULTATION_ENTRIES = [
@@ -651,5 +1020,69 @@ window.COCINA_CONSULTATION_ENTRIES = [
     "id": "CONSULTA-parrilla_tipo",
     "name": "Parrilla",
     "contentKind": "technique"
+  }
+];
+window.COCINA_VARIANT_GROUPS = [
+  {
+    "baseName": "Tacos",
+    "status": "confirmado",
+    "sourceCase": "tacos_relleno_definitivo",
+    "confirmedAt": "2026-10-29T16:40:13.095538+00:00",
+    "sharedQuota": true,
+    "sourceHeading": "Tacos",
+    "commonIngredients": [
+      "Tortillas",
+      "Pico de gallo",
+      "Salsa costeña (verde)",
+      "Queso rallado"
+    ],
+    "commonInstructionPrefix": "Humedecer y calentar",
+    "note": "Ingredientes identificados en el texto importado. Las cantidades siguen pendientes de completar.",
+    "variants": [
+      {
+        "key": "tacos-pollo",
+        "name": "Tacos de pollo",
+        "familyPath": [
+          "Pollo"
+        ],
+        "sourceStart": "Pollo (pechugas)",
+        "sourceEnd": "Carne picada",
+        "ingredients": [
+          "Pollo (pechugas)",
+          "Aceite de oliva",
+          "Ajo",
+          "Cebolla",
+          "Vino blanco",
+          "Pimentón dulce",
+          "Tomate rallado"
+        ]
+      },
+      {
+        "key": "tacos-carne-picada",
+        "name": "Tacos de carne picada",
+        "familyPath": [
+          "Carne"
+        ],
+        "sourceStart": "Carne picada",
+        "sourceEnd": "Carne desmechada",
+        "ingredients": [
+          "Carne picada"
+        ],
+        "processReference": "Tacos de pollo"
+      },
+      {
+        "key": "tacos-carne-desmechada",
+        "name": "Tacos de carne desmechada",
+        "familyPath": [
+          "Carne"
+        ],
+        "sourceStart": "Carne desmechada",
+        "sourceEnd": "Tapas/montados/pinchos",
+        "optionalEnd": true,
+        "ingredients": [
+          "Carne para desmechar"
+        ]
+      }
+    ]
   }
 ];
