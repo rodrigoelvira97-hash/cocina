@@ -462,8 +462,12 @@ window.COCINA_RECIPE_RULES = [
     "preparationNote": "Ensalada genérica. Los tipos y la preparación quedan pendientes de desarrollar."
   },
   {
+    "name": "Entraña",
+    "category": "BBQ"
+  },
+  {
     "name": "Gambas",
-    "category": "Tapa"
+    "category": "Tapas"
   },
   {
     "name": "Gazpacho",
@@ -474,7 +478,7 @@ window.COCINA_RECIPE_RULES = [
     "name": "Nachos",
     "moment": "Cena",
     "single": false,
-    "category": "Tapa"
+    "category": "Tapas"
   },
   {
     "name": "Pimientos rellenos",
@@ -494,39 +498,48 @@ window.COCINA_RECIPE_RULES = [
     "preparationNote": "Comida de supervivencia."
   },
   {
+    "name": "Chuletón",
+    "category": "BBQ"
+  },
+  {
+    "name": "T-Bone",
+    "category": "BBQ"
+  },
+  {
     "name": "Alitas",
-    "preparationNote": "La preparación de las alitas queda a tu elección."
+    "preparationNote": "La preparación de las alitas queda a tu elección.",
+    "category": "BBQ"
   },
   {
     "name": "Chorizo a la sidra",
     "moment": "Cena",
     "single": false,
-    "category": "Tapa"
+    "category": "Tapas"
   },
   {
     "name": "Guacamole",
     "moment": "Cena",
     "single": false,
-    "category": "Tapa"
+    "category": "Tapas"
   },
   {
     "name": "Mejillones",
     "moment": "Cena",
     "single": false,
     "preparationNote": "Elige la preparación: al vapor, en escabeche o cabreados. Todas comparten la frecuencia de Mejillones.",
-    "category": "Tapa"
+    "category": "Tapas"
   },
   {
     "name": "Pincho de solomillo de cerdo",
     "moment": "Cena",
     "single": false,
-    "category": "Tapa"
+    "category": "Tapas"
   },
   {
     "name": "Rollitos de bacón",
     "moment": "Cena",
     "single": false,
-    "category": "Tapa"
+    "category": "Tapas"
   },
   {
     "name": "Fabes con almejas",
@@ -545,6 +558,10 @@ window.COCINA_RECIPE_RULES = [
     "moment": "Cena",
     "single": false,
     "freq": "max 1"
+  },
+  {
+    "name": "Parrilla",
+    "category": "BBQ"
   }
 ];
 window.COCINA_MENU_ADDITIONS = [
@@ -747,70 +764,70 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Pasta"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Lasaña",
     "path": [
       "Pasta"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Fideos con caballa",
     "path": [
       "Pasta"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Alitas",
     "path": [
       "Pollo"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Pollo asado",
     "path": [
       "Pollo"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Muslos pollo al curry",
     "path": [
       "Pollo"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Lentejas",
     "path": [
       "Legumbres"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Fabes",
     "path": [
       "Legumbres"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Fabes con almejas",
     "path": [
       "Legumbres"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Chipirones",
     "path": [
       "Marisco"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Gambas",
@@ -824,7 +841,7 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Marisco"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Mejillones",
@@ -838,112 +855,112 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Marisco"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Magro cerdo y patatas",
     "path": [
       "Cerdo"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Albóndigas",
     "path": [
       "Carne"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Chuleta con espárragos",
     "path": [
-      "Carne"
+      "Cerdo"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Chuletas con patatas",
     "path": [
-      "Carne"
+      "Cerdo"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Entraña",
     "path": [
       "Carne"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Conejo",
     "path": [
       "Carne"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Champiñones",
     "path": [
       "Setas y champiñones"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Setas",
     "path": [
       "Setas y champiñones"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Pure calabacin",
     "path": [
-      "Verduras"
+      "Purés y cremas"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Pure calabaza",
     "path": [
-      "Verduras"
+      "Purés y cremas"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Pure zanahoria",
     "path": [
-      "Verduras"
+      "Purés y cremas"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Papas a la riojana",
     "path": [
       "Patatas"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Pure patata chorizo",
     "path": [
       "Patatas"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Tortilla francesa",
     "path": [
       "Huevos"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Huevos con patatas",
     "path": [
       "Huevos"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Sopa ajo (castellana)",
@@ -964,14 +981,14 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Panes"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Ceviche",
     "path": [
       "Pescados"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Tartar de Atún",
@@ -992,7 +1009,7 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Quesos"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Chorizo a la sidra",
@@ -1115,3 +1132,19 @@ window.COCINA_VARIANT_GROUPS = [
     ]
   }
 ];
+window.COCINA_CATEGORY_POLICY = {
+  "values": [
+    "Tapas",
+    "BBQ",
+    "Bebidas",
+    "Platos"
+  ],
+  "aliases": {
+    "Tapa": "Tapas",
+    "Bebida": "Bebidas",
+    "Plato principal": "Platos",
+    "Parrilla": "BBQ",
+    "Pincho": "Tapas"
+  },
+  "platosIncludesMenuBBQ": true
+};
