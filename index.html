@@ -84,6 +84,12 @@
     <div id="recipePortions" class="recipe-portions" hidden>
       <label for="recipePeople">Personas</label>
       <select id="recipePeople" aria-describedby="recipePortionStatus"></select>
+      <div id="recipeCustomPeopleGroup" class="custom-people" hidden>
+        <label for="recipeCustomPeople">Número de personas (7 o más)</label>
+        <input id="recipeCustomPeople" type="text" inputmode="numeric" pattern="[0-9]*" enterkeyhint="done" autocomplete="off" placeholder="Ej.: 8" aria-describedby="recipePeopleError">
+        <button id="applyRecipePeople" class="primary-button" type="button">Aplicar</button>
+        <p id="recipePeopleError" class="people-error" role="alert" hidden></p>
+      </div>
       <p id="recipePortionStatus" class="portion-status" role="status"></p>
     </div>
     <div class="recipe-body" id="recipeBody"></div>

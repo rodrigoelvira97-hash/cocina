@@ -25,6 +25,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .recipe-portions { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px 12px; margin: 0 0 15px; padding: 12px; border: 1px solid #dce6de; border-radius: 11px; background: #f4f8f5; }
 .recipe-portions label { font-weight: 700; font-size: 14px; color: var(--green); }
 .recipe-portions select { min-height: 44px; max-width: 100%; padding: 8px 12px; border: 1px solid #b9cdbf; border-radius: 8px; background: white; color: var(--ink); font: inherit; font-size: 16px; }
+.custom-people[hidden], .people-error[hidden] { display: none; }
+.custom-people { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding-top: 6px; }
+.custom-people label, .people-error { grid-column: 1 / -1; }
+.custom-people input { width: 100%; min-width: 0; min-height: 44px; padding: 8px 12px; border: 1px solid #b9cdbf; border-radius: 8px; background: white; color: var(--ink); font: inherit; font-size: 16px; }
+.custom-people input[aria-invalid="true"] { border-color: #a32f23; }
+.custom-people button { min-height: 44px; padding: 8px 14px; font-size: 14px; }
+.people-error { color: #a32f23; font-size: 12px; line-height: 1.4; }
 .portion-status { grid-column: 1 / -1; font-size: 12px; line-height: 1.5; color: #59665b; }
 .portion-summary { margin-bottom: 20px; padding: 14px; border: 1px solid #dce6de; border-radius: 11px; background: #f4f8f5; }
 .portion-summary h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); }

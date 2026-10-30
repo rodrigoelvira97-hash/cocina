@@ -257,7 +257,29 @@ function familyRelationsHTML(recipe){
 }
 const portionPreferenceKey='cocina-people-v1';
 let selectedPeople=2,openedRecipe=null;
-try{const preference=JSON.parse(localStorage.getItem(portionPreferenceKey)||'null');if(preference&&Number.isInteger(preference.people)&&preference.people>=1&&preference.people<=20)selectedPeople=preference.people}catch{}
+try{const preference=JSON.parse(localStorage.getItem(portionPreferenceKey)||'null');if(preference)selectedPeople=window.CocinaPortions.validatePeople(preference.people)}catch{}
+let lastCustomPeople=selectedPeople>6?selectedPeople:null;
+function clearPeopleError(){$('#recipePeopleError').hidden=true;$('#recipePeopleError').textContent='';$('#recipeCustomPeople').removeAttribute('aria-invalid')}
+function syncPeopleControls(){
+ const custom=selectedPeople>6;
+ $('#recipePeople').value=custom?'more':String(selectedPeople);
+ $('#recipeCustomPeopleGroup').hidden=!custom;
+ $('#recipeCustomPeople').value=String((custom?selectedPeople:lastCustomPeople)||'');
+ clearPeopleError();
+}
+function applySelectedPeople(people){
+ selectedPeople=window.CocinaPortions.validatePeople(people);
+ if(selectedPeople>6)lastCustomPeople=selectedPeople;
+ try{localStorage.setItem(portionPreferenceKey,JSON.stringify({people:selectedPeople}))}catch{}
+ renderOpenedRecipe();$('#recipeBody').scrollTop=0;
+}
+function applyCustomPeople(){
+ const input=$('#recipeCustomPeople'),raw=input.value.trim(),people=Number(raw);
+ if(!/^[0-9]+$/.test(raw)||!Number.isSafeInteger(people)||people<7){
+  $('#recipePeopleError').textContent='Indica un número entero a partir de 7.';$('#recipePeopleError').hidden=false;input.setAttribute('aria-invalid','true');input.focus();return;
+ }
+ applySelectedPeople(people);input.blur();
+}
 function portionModelFor(recipe){return window.CocinaPortions?.findModel(window.COCINA_RECIPE_PORTIONS||[],recipe.name)||null}
 function scaledPortionsFor(recipe){return window.CocinaPortions?.scale(portionModelFor(recipe),recipe.body,selectedPeople)||null}
 function portionsHTML(result){
@@ -270,7 +292,7 @@ function renderOpenedRecipe(){
  const showPeople=!r.familyOnly;
  $('#recipePortions').hidden=!showPeople;
  let quantities=null;if(showPeople)quantities=scaledPortionsFor(r);
- $('#recipePeople').value=String(selectedPeople);
+ syncPeopleControls();
  $('#recipePortionStatus').textContent=!quantities?'Esta receta necesita cantidades base por persona para poder ajustarlas.':quantities.statusText||(quantities.coverage==='partial'?'Se ajustan las cantidades disponibles. Faltan otros ingredientes por cuantificar.':'Cantidades ajustadas al número de personas.');
  const missing=catalog.headings.some(heading=>normalizeHeadingTitle(heading.title)===normalizeHeadingTitle(r.name))?'En el Word aparece este encabezado, pero no he encontrado texto asociado debajo. Puede ser una ficha pendiente de completar.':'No encuentro un encabezado equivalente en el Word importado. Puede estar con otro nombre o no estar todavía en la copia de trabajo.';
  const note=r.preparationNote?`<p class="recipe-paragraph recipe-note">${escapeHTML(r.preparationNote)}</p>`:'';
@@ -287,8 +309,16 @@ function openRecipe(id){
  openedRecipe=r;renderOpenedRecipe();
  const dialog=$('#recipeDialog');if(!dialog.open)dialog.showModal();$('#recipeBody').scrollTop=0;
 }
-$('#recipePeople').innerHTML=Array.from({length:20},(_,index)=>{const people=index+1;return `<option value="${people}">${people} ${people===1?'persona':'personas'}</option>`}).join('');
-$('#recipePeople').addEventListener('change',()=>{const next=Number($('#recipePeople').value);try{window.CocinaPortions.validatePeople(next)}catch{$('#recipePeople').value=String(selectedPeople);return}selectedPeople=next;try{localStorage.setItem(portionPreferenceKey,JSON.stringify({people:selectedPeople}))}catch{}renderOpenedRecipe();$('#recipeBody').scrollTop=0;});
+$('#recipePeople').innerHTML=Array.from({length:6},(_,index)=>{const people=index+1;return `<option value="${people}">${people} ${people===1?'persona':'personas'}</option>`}).join('')+'<option value="more">Más personas…</option>';
+$('#recipePeople').addEventListener('change',()=>{
+ if($('#recipePeople').value==='more'){
+  $('#recipeCustomPeopleGroup').hidden=false;$('#recipeCustomPeople').value=String(lastCustomPeople||'');clearPeopleError();$('#recipeCustomPeople').focus();return;
+ }
+ applySelectedPeople(Number($('#recipePeople').value));
+});
+$('#applyRecipePeople').addEventListener('click',applyCustomPeople);
+$('#recipeCustomPeople').addEventListener('input',clearPeopleError);
+$('#recipeCustomPeople').addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();applyCustomPeople()}});
 function renderRecipeLibrary(){
  const filter=$('#categoryFilter'),category=filter.value,categories=categoryPolicy.values;
  const familyFilter=$('#familyFilter'),family=familyFilter.value,families=[...familyNodeNames].sort((a,b)=>familyOptionLabel(a).localeCompare(familyOptionLabel(b),'es'));

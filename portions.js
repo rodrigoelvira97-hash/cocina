@@ -2,7 +2,7 @@
 (function(root){
  'use strict';
  const normalize=value=>String(value||'').normalize('NFD').replace(/\p{M}/gu,'').toLocaleLowerCase('es').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
- function validatePeople(value){if(!Number.isInteger(value)||value<1||value>20)throw new Error('El número de personas debe estar entre 1 y 20.');return value;}
+ function validatePeople(value){if(!Number.isSafeInteger(value)||value<1)throw new Error('Indica un número entero de personas mayor que cero.');return value;}
  function validateModels(models){
   if(!Array.isArray(models))throw new Error('Las raciones deben ser una lista.');
   const names=new Set();
