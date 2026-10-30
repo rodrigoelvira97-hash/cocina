@@ -462,9 +462,19 @@ window.COCINA_RECIPE_RULES = [
     "preparationNote": "Ensalada genérica. Los tipos y la preparación quedan pendientes de desarrollar."
   },
   {
+    "name": "Gambas",
+    "category": "Tapa"
+  },
+  {
     "name": "Gazpacho",
     "moment": "Cena",
     "single": false
+  },
+  {
+    "name": "Nachos",
+    "moment": "Cena",
+    "single": false,
+    "category": "Tapa"
   },
   {
     "name": "Pimientos rellenos",
@@ -490,28 +500,33 @@ window.COCINA_RECIPE_RULES = [
   {
     "name": "Chorizo a la sidra",
     "moment": "Cena",
-    "single": false
+    "single": false,
+    "category": "Tapa"
   },
   {
     "name": "Guacamole",
     "moment": "Cena",
-    "single": false
+    "single": false,
+    "category": "Tapa"
   },
   {
     "name": "Mejillones",
     "moment": "Cena",
     "single": false,
-    "preparationNote": "Elige la preparación: al vapor, en escabeche o cabreados. Todas comparten la frecuencia de Mejillones."
+    "preparationNote": "Elige la preparación: al vapor, en escabeche o cabreados. Todas comparten la frecuencia de Mejillones.",
+    "category": "Tapa"
   },
   {
     "name": "Pincho de solomillo de cerdo",
     "moment": "Cena",
-    "single": false
+    "single": false,
+    "category": "Tapa"
   },
   {
     "name": "Rollitos de bacón",
     "moment": "Cena",
-    "single": false
+    "single": false,
+    "category": "Tapa"
   },
   {
     "name": "Fabes con almejas",
@@ -802,7 +817,7 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Marisco"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Gambones a la plancha",
@@ -816,7 +831,7 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Marisco"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Sepia",
@@ -984,7 +999,7 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Chorizos"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Salchichas encebolladas",
@@ -998,7 +1013,7 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Aguacates"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Ensalada",
@@ -1011,6 +1026,20 @@ window.COCINA_FAMILY_PATHS = [
     "recipe": "Pimientos rellenos",
     "path": [
       "Verduras"
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Gazpacho",
+    "path": [
+      "Sopas"
+    ],
+    "classification": "confirmed"
+  },
+  {
+    "recipe": "Salmorejo",
+    "path": [
+      "Sopas"
     ],
     "classification": "confirmed"
   }

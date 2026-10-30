@@ -98,7 +98,7 @@ const recipes = menuForApp.map((item,index)=>{
   const body=item.variantGroup?'':wordBodyFor(item.name);
   const familyOnly=!!item.variantGroup||isFamilyOnlyName(item.name)||/categor[ií]a\s*\/\s*tema|informaci[oó]n/i.test(sourceRecipe?.type||'');
   const approval=calendarApprovalFor(item)||(item.auditVariantOf?calendarApprovalFor({id:item.auditVariantOf,name:item.variantGroupName}):null),calendarIncluded=!familyOnly&&approval?.calendarIncluded!==false;
-  return { ...item, id:`${item.id||item.recipeId||item.name}#${occurrence}`, sourceId:item.id, moment:item.moment, single:item.single, familyOnly, calendarIncluded, legacyManualAllowed:!!item.variantGroup&&approval?.calendarIncluded!==false, manualSingleAllowed:item.name.trim().toLocaleLowerCase('es')==='nachos', freq:item.freq, active:/^si$/i.test(item.active), category:sourceRecipe?.category||'', type:sourceRecipe?.type||'Pendiente de clasificación', linkStatus:sourceRecipe?.linkStatus||'', body, ...(item.name==='Carbonara'?{freq:'min 2',freqExact:2,onlyWeekday:5,minGapDays:7}:{}) };
+  return { ...item, id:`${item.id||item.recipeId||item.name}#${occurrence}`, sourceId:item.id, moment:item.moment, single:item.single, familyOnly, calendarIncluded, primaryFamily:familyPathFor(item.name)[0]||'', legacyManualAllowed:!!item.variantGroup&&approval?.calendarIncluded!==false, manualSingleAllowed:item.name.trim().toLocaleLowerCase('es')==='nachos', freq:item.freq, active:/^si$/i.test(item.active), category:item.category??sourceRecipe?.category??'', type:sourceRecipe?.type||'Pendiente de clasificación', linkStatus:sourceRecipe?.linkStatus||'', body, ...(item.name==='Carbonara'?{freq:'min 2',freqExact:2,onlyWeekday:5,minGapDays:7}:{}) };
 });
 const librarySources=catalog.recipes.map(item=>{const group=variantGroups.find(group=>group.baseName===item.name);if(group)return {...item,contentKind:'variant-group',variantGroup:group.baseName};const canonical=familyNodeNames.find(name=>familyWordTitles[name]&&normalizeHeadingTitle(familyWordTitles[name])===normalizeHeadingTitle(item.name));return canonical?{...item,name:canonical}:item});
 for(const name of familyNodeNames)if(!librarySources.some(item=>normalizeHeadingTitle(item.name)===normalizeHeadingTitle(name)))librarySources.push({id:`FAMILY-${normalizeHeadingTitle(name).replaceAll(' ','-')}`,name,contentKind:'family',syntheticConsultation:true,eligible:'No',type:'Familia de recetas'});
@@ -118,7 +118,7 @@ const $=s=>document.querySelector(s);
 const grid=$('#calendarGrid'), alertBox=$('#alerts');
 let viewed=new Date(); viewed.setDate(1);
 const storeKey='cocina-calendar-v1';
-const scheduleVersion=8;
+const scheduleVersion=9;
 let saved=JSON.parse(localStorage.getItem(storeKey)||'{}');
 function migrateSavedNachos(){const row=catalog.menu.find(r=>r.name.trim().toLocaleLowerCase('es')==='nachos'),canonical=row?`${row.id}#1`:'' ,legacy=row?`${row.id}#2`:'';if(!legacy)return;for(const month of Object.values(saved)){for(const [name,manual] of [['manual',true],['schedule',false]]){const entries=month?.[name];if(!entries)continue;for(const [k,ids] of Object.entries(entries)){if(!Array.isArray(ids))continue;if(manual)entries[k]=[...new Set(ids.map(id=>id===legacy?canonical:id))];else if(ids.includes(legacy)){entries[k]=ids.filter(id=>id!==legacy);month.needsRegeneration=true}}}}}
 migrateSavedNachos();
@@ -130,6 +130,7 @@ function allowed(r,slot){if(!r.calendarIncluded)return false;if(slot==='lunch')r
 function sourceWarnings(){const warnings=[],rawNachos=catalog.menu.filter(r=>r.name.trim().toLocaleLowerCase('es')==='nachos'),families=catalog.menu.filter(r=>isFamilyOnlyName(r.name));if(rawNachos.length>1)warnings.push(`El Excel mantiene ${rawNachos.length} filas de Nachos. En este prototipo se consolidan como: solo cena, máximo 2 al mes, requieren pareja en automático; el cambio manual puede dejarlos solos.`);if(families.length)warnings.push(`Filas de familias en Menu (${[...new Set(families.map(r=>r.name))].join(', ')}) se mantienen para consulta, pero se excluyen de la planificación automática porque no son platos concretos.`);return warnings}
 function daysOfMonth(y,m){const a=[];for(let d=1;d<=new Date(y,m+1,0).getDate();d++){const dt=new Date(y,m,d);if(dt.getDay()>=1&&dt.getDay()<=5)a.push(dt)}return a}
 function quotaKey(r){return r.quotaGroup||r.id}
+function planningFamily(r){return r.primaryFamily||''}
 function mealRecipeNames(ids,manual=false){return ids.map(id=>recipes.find(r=>r.id===id)).filter(r=>r&&(r.calendarIncluded||manual&&r.legacyManualAllowed))}
 function mealRecipeLabel(recipe){return recipe.variantGroup?`${recipe.name} · relleno pendiente`:recipe.name}
 function recipeKey(r){return r.name.trim().toLocaleLowerCase('es')}
@@ -143,9 +144,9 @@ function buildScheduleFor(y,m,previousUsed=new Set(),variation=0){
  const countOf=r=>counts.get(quotaKey(r))||0;
  const canUse=(r,dt)=>{const f=parseFreq(r),last=lastUsed.get(quotaKey(r)),cap=f.min?Infinity:f.count;return countOf(r)<cap&&(!last||dt-last>=(r.minGapDays||6)*dayMs)};
  const weekKey=dt=>`${y}-${m}-${Math.floor((dt.getDate()-1)/7)}`;
- const scoreOf=(r,dt)=>{const family=String(r.category||'').trim(),inWeek=family?(weekFamilies.get(`${weekKey(dt)}|${family}`)||0):0;let score=random();if(previousUsed.has(recipeKey(r)))score-=5;score-=inWeek*2.5;score-=countOf(r)*1.4;return score};
+ const scoreOf=(r,dt)=>{const family=planningFamily(r),inWeek=family?(weekFamilies.get(`${weekKey(dt)}|${family}`)||0):0;let score=random();if(previousUsed.has(recipeKey(r)))score-=5;score-=inWeek*2.5;score-=countOf(r)*1.4;return score};
  const rank=(list,dt)=>list.map(r=>({r,score:scoreOf(r,dt)})).sort((a,b)=>b.score-a.score).map(x=>x.r);
- const place=(dt,slot,items)=>{schedule[key(y,m,dt.getDate(),slot)]=items.map(r=>r.id);for(const r of items){counts.set(quotaKey(r),countOf(r)+1);lastUsed.set(quotaKey(r),dt);const family=String(r.category||'').trim();if(family){const k=`${weekKey(dt)}|${family}`;weekFamilies.set(k,(weekFamilies.get(k)||0)+1)}}};
+ const place=(dt,slot,items)=>{schedule[key(y,m,dt.getDate(),slot)]=items.map(r=>r.id);for(const r of items){counts.set(quotaKey(r),countOf(r)+1);lastUsed.set(quotaKey(r),dt);const family=planningFamily(r);if(family){const k=`${weekKey(dt)}|${family}`;weekFamilies.set(k,(weekFamilies.get(k)||0)+1)}}};
  // Carbonara is a fixed rule: two Fridays, spread as far apart as possible.
  if(carbonara){const fridays=workdays.filter(dt=>dt.getDay()===5),target=2,chosen=[];for(let i=0;i<target&&i<fridays.length;i++){const index=target===1?0:Math.round(i*(fridays.length-1)/(target-1)),dt=fridays[index];if(!chosen.some(x=>x.getTime()===dt.getTime())&&(!chosen.length||dt-chosen[chosen.length-1]>=7*dayMs))chosen.push(dt)}chosen.forEach(dt=>place(dt,'lunch',[carbonara]));if(chosen.length<target)warnings.push(`Carbonara: solo se encontraron ${chosen.length} viernes separados al menos una semana; se requieren 2.`)}
  for(const dt of workdays){const k=key(y,m,dt.getDate(),'lunch');if(schedule[k])continue;const options=candidates.filter(r=>r!==carbonara&&allowed(r,'lunch')&&canUse(r,dt)),mandatory=options.filter(r=>parseFreq(r).min&&countOf(r)<parseFreq(r).count),chosen=rank(mandatory.length?mandatory:options,dt)[0];if(chosen)place(dt,'lunch',[chosen]);else unfilled.lunch++}
