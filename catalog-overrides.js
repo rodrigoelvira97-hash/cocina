@@ -1171,33 +1171,52 @@ window.COCINA_RECIPE_PORTIONS = [
     "names": [
       "Carbonara"
     ],
-    "sourceType": "word_per_person",
+    "sourceType": "owner_standard",
     "basePeople": 1,
     "coverage": "partial",
     "review": {
-      "status": "pending_owner_validation"
+      "status": "confirmed"
     },
-    "note": "Cantidades por versión: elige una de las dos preparaciones.",
     "quantities": [
       {
-        "group": "Versión 1",
-        "label": "Huevos",
-        "amount": 2,
+        "label": "Pasta seca",
+        "amount": 100,
         "unit": {
-          "one": "huevo",
-          "many": "huevos"
-        },
-        "evidence": "Versión 1 (2 huevos por cabeza):"
+          "one": "gramo",
+          "many": "gramos"
+        }
       },
       {
-        "group": "Versión económica",
+        "label": "Guanciale o panceta",
+        "amount": 40,
+        "unit": {
+          "one": "gramo",
+          "many": "gramos"
+        }
+      },
+      {
+        "label": "Queso",
+        "amount": 25,
+        "unit": {
+          "one": "gramo",
+          "many": "gramos"
+        }
+      },
+      {
         "label": "Huevos",
         "amount": 1,
         "unit": {
           "one": "huevo",
           "many": "huevos"
-        },
-        "evidence": "Versión más económica (huevo por cabeza)."
+        }
+      }
+    ],
+    "note": "Condimentos y agua de cocción: según la receta. La ración validada usa un huevo por persona.",
+    "statusText": "Cantidades principales ajustadas; condimentos según la receta.",
+    "referenceOverrides": [
+      {
+        "from": "Versión 1 (2 huevos por cabeza):",
+        "to": "Versión 1 (1 huevo por persona):"
       }
     ]
   },
@@ -1211,7 +1230,6 @@ window.COCINA_RECIPE_PORTIONS = [
     "review": {
       "status": "pending_owner_validation"
     },
-    "note": "El montado especial es una preparación opcional.",
     "quantities": [
       {
         "group": "Montado final",
@@ -1245,6 +1263,7 @@ window.COCINA_RECIPE_PORTIONS = [
         },
         "evidence": "a la plancha uno o dos gambones por cabeza."
       }
-    ]
+    ],
+    "note": "El montado especial es una preparación opcional."
   }
 ];

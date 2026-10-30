@@ -258,11 +258,12 @@ function familyRelationsHTML(recipe){
 const portionPreferenceKey='cocina-people-v1';
 let selectedPeople=2,openedRecipe=null;
 try{const preference=JSON.parse(localStorage.getItem(portionPreferenceKey)||'null');if(preference&&Number.isInteger(preference.people)&&preference.people>=1&&preference.people<=20)selectedPeople=preference.people}catch{}
-function scaledPortionsFor(recipe){const engine=window.CocinaPortions,models=window.COCINA_RECIPE_PORTIONS||[];return engine?engine.scale(engine.findModel(models,recipe.name),recipe.body,selectedPeople):null}
+function portionModelFor(recipe){return window.CocinaPortions?.findModel(window.COCINA_RECIPE_PORTIONS||[],recipe.name)||null}
+function scaledPortionsFor(recipe){return window.CocinaPortions?.scale(portionModelFor(recipe),recipe.body,selectedPeople)||null}
 function portionsHTML(result){
  if(!result)return '';
  const groups=new Map();for(const row of result.quantities){const group=row.group||'Ingredientes';if(!groups.has(group))groups.set(group,[]);groups.get(group).push(row);}
- return `<section class="portion-summary" aria-label="Cantidades para ${result.people} ${result.people===1?'persona':'personas'}"><h3>Cantidades para ${result.people} ${result.people===1?'persona':'personas'}</h3>${[...groups].map(([title,rows])=>`<h4>${escapeHTML(title)}</h4><dl>${rows.map(row=>`<div><dt>${escapeHTML(row.label)}</dt><dd>${escapeHTML(window.CocinaPortions.formatQuantity(row))}</dd></div>`).join('')}</dl>`).join('')}${result.note?`<p>${escapeHTML(result.note)}</p>`:''}<p class="portion-reference">${result.sourceType==='word_per_person'?'Referencia por persona del Word.':'Ración estándar validada.'} El texto de la receta conserva sus referencias originales.</p></section>`;
+ return `<section class="portion-summary" aria-label="Cantidades para ${result.people} ${result.people===1?'persona':'personas'}"><h3>Cantidades para ${result.people} ${result.people===1?'persona':'personas'}</h3>${[...groups].map(([title,rows])=>`<h4>${escapeHTML(title)}</h4><dl>${rows.map(row=>`<div><dt>${escapeHTML(row.label)}</dt><dd>${escapeHTML(window.CocinaPortions.formatQuantity(row))}</dd></div>`).join('')}</dl>`).join('')}${result.note?`<p>${escapeHTML(result.note)}</p>`:''}<p class="portion-reference">${result.sourceType==='word_per_person'?'Referencia por persona del Word. El texto conserva sus referencias originales.':'Ración estándar validada. La preparación conserva sus pasos.'}</p></section>`;
 }
 function renderOpenedRecipe(){
  const r=openedRecipe;if(!r)return;
@@ -270,11 +271,12 @@ function renderOpenedRecipe(){
  $('#recipePortions').hidden=!showPeople;
  let quantities=null;if(showPeople)quantities=scaledPortionsFor(r);
  $('#recipePeople').value=String(selectedPeople);
- $('#recipePortionStatus').textContent=!quantities?'Esta receta necesita cantidades base por persona para poder ajustarlas.':quantities.coverage==='partial'?'Se ajustan las cantidades disponibles. Faltan otros ingredientes por cuantificar.':'Cantidades ajustadas al número de personas.';
+ $('#recipePortionStatus').textContent=!quantities?'Esta receta necesita cantidades base por persona para poder ajustarlas.':quantities.statusText||(quantities.coverage==='partial'?'Se ajustan las cantidades disponibles. Faltan otros ingredientes por cuantificar.':'Cantidades ajustadas al número de personas.');
  const missing=catalog.headings.some(heading=>normalizeHeadingTitle(heading.title)===normalizeHeadingTitle(r.name))?'En el Word aparece este encabezado, pero no he encontrado texto asociado debajo. Puede ser una ficha pendiente de completar.':'No encuentro un encabezado equivalente en el Word importado. Puede estar con otro nombre o no estar todavía en la copia de trabajo.';
  const note=r.preparationNote?`<p class="recipe-paragraph recipe-note">${escapeHTML(r.preparationNote)}</p>`:'';
  const relations=familyRelationsHTML(r);
- $('#recipeBody').innerHTML=portionsHTML(quantities)+relations+note+(r.body?recipeContentHTML(r.body,r.name):r.preparationNote||r.familyOnly&&relations?'':recipeContentHTML(missing,r.name));
+ const visibleBody=window.CocinaPortions?window.CocinaPortions.displayBody(portionModelFor(r),r.body):r.body;
+ $('#recipeBody').innerHTML=portionsHTML(quantities)+relations+note+(visibleBody?recipeContentHTML(visibleBody,r.name):r.preparationNote||r.familyOnly&&relations?'':recipeContentHTML(missing,r.name));
 }
 function openRecipe(id){
  const r=recipes.find(item=>item.id===id)||catalogRecipes.find(item=>item.id===id);if(!r)return;
