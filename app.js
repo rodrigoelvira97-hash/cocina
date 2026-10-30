@@ -255,17 +255,38 @@ function familyRelationsHTML(recipe){
  }
  return [...groups].map(([label,names])=>{const links=[...names].map(title=>catalogRecipes.find(item=>normalizeHeadingTitle(item.name)===normalizeHeadingTitle(title))).filter(Boolean);if(label!=='Familia')links.sort((a,b)=>a.name.localeCompare(b.name,'es'));const separator=label==='Familia'?'<span class="family-separator" aria-hidden="true">›</span>':'';return links.length?`<nav class="recipe-family-group" aria-label="${escapeHTML(label)}"><span>${escapeHTML(label)}</span><div>${links.map(item=>`<button type="button" class="family-link" data-library-entry="${escapeHTML(item.id)}">${escapeHTML(item.name)}</button>`).join(separator)}</div></nav>`:''}).join('');
 }
+const portionPreferenceKey='cocina-people-v1';
+let selectedPeople=2,openedRecipe=null;
+try{const preference=JSON.parse(localStorage.getItem(portionPreferenceKey)||'null');if(preference&&Number.isInteger(preference.people)&&preference.people>=1&&preference.people<=20)selectedPeople=preference.people}catch{}
+function scaledPortionsFor(recipe){const engine=window.CocinaPortions,models=window.COCINA_RECIPE_PORTIONS||[];return engine?engine.scale(engine.findModel(models,recipe.name),recipe.body,selectedPeople):null}
+function portionsHTML(result){
+ if(!result)return '';
+ const groups=new Map();for(const row of result.quantities){const group=row.group||'Ingredientes';if(!groups.has(group))groups.set(group,[]);groups.get(group).push(row);}
+ return `<section class="portion-summary" aria-label="Cantidades para ${result.people} ${result.people===1?'persona':'personas'}"><h3>Cantidades para ${result.people} ${result.people===1?'persona':'personas'}</h3>${[...groups].map(([title,rows])=>`<h4>${escapeHTML(title)}</h4><dl>${rows.map(row=>`<div><dt>${escapeHTML(row.label)}</dt><dd>${escapeHTML(window.CocinaPortions.formatQuantity(row))}</dd></div>`).join('')}</dl>`).join('')}${result.note?`<p>${escapeHTML(result.note)}</p>`:''}<p class="portion-reference">${result.sourceType==='word_per_person'?'Referencia por persona del Word.':'Ración estándar validada.'} El texto de la receta conserva sus referencias originales.</p></section>`;
+}
+function renderOpenedRecipe(){
+ const r=openedRecipe;if(!r)return;
+ const showPeople=!r.familyOnly;
+ $('#recipePortions').hidden=!showPeople;
+ let quantities=null;if(showPeople)quantities=scaledPortionsFor(r);
+ $('#recipePeople').value=String(selectedPeople);
+ $('#recipePortionStatus').textContent=!quantities?'Esta receta necesita cantidades base por persona para poder ajustarlas.':quantities.coverage==='partial'?'Se ajustan las cantidades disponibles. Faltan otros ingredientes por cuantificar.':'Cantidades ajustadas al número de personas.';
+ const missing=catalog.headings.some(heading=>normalizeHeadingTitle(heading.title)===normalizeHeadingTitle(r.name))?'En el Word aparece este encabezado, pero no he encontrado texto asociado debajo. Puede ser una ficha pendiente de completar.':'No encuentro un encabezado equivalente en el Word importado. Puede estar con otro nombre o no estar todavía en la copia de trabajo.';
+ const note=r.preparationNote?`<p class="recipe-paragraph recipe-note">${escapeHTML(r.preparationNote)}</p>`:'';
+ const relations=familyRelationsHTML(r);
+ $('#recipeBody').innerHTML=portionsHTML(quantities)+relations+note+(r.body?recipeContentHTML(r.body,r.name):r.preparationNote||r.familyOnly&&relations?'':recipeContentHTML(missing,r.name));
+}
 function openRecipe(id){
  const r=recipes.find(item=>item.id===id)||catalogRecipes.find(item=>item.id===id);if(!r)return;
- const technique=r.contentKind==='technique',variantGroup=!!r.variantGroup,relations=familyRelationsHTML(r);
+ const technique=r.contentKind==='technique',variantGroup=!!r.variantGroup;
  $('#recipeKind').textContent=variantGroup?'PREPARACIONES':technique?'TÉCNICA':r.familyOnly?(r.contentKind==='family'?(familyNodePath(r.name).length>1?'SUBFAMILIA':'FAMILIA'):'CONSULTA'):'RECETA';
  $('#recipeTitle').textContent=r.name;
  $('#recipeMeta').textContent=variantGroup?'Elige el relleno para consultar su preparación':technique?'Guía de técnica y recomendaciones':r.familyOnly?(r.contentKind==='family'?familyDescription(r.name):'Familia / información'):[r.category,r.type,r.moment,r.single===undefined?'':(r.single?'Plato único':'Necesita acompañamiento'),r.linkStatus].filter(Boolean).join(' · ');
- const missing=catalog.headings.some(heading=>normalizeHeadingTitle(heading.title)===normalizeHeadingTitle(r.name))?'En el Word aparece este encabezado, pero no he encontrado texto asociado debajo. Puede ser una ficha pendiente de completar.':'No encuentro un encabezado equivalente en el Word importado. Puede estar con otro nombre o no estar todavía en la copia de trabajo.';
- const note=r.preparationNote?`<p class="recipe-paragraph recipe-note">${escapeHTML(r.preparationNote)}</p>`:'';
- $('#recipeBody').innerHTML=relations+note+(r.body?recipeContentHTML(r.body,r.name):r.preparationNote||r.familyOnly&&relations?'':recipeContentHTML(missing,r.name));
+ openedRecipe=r;renderOpenedRecipe();
  const dialog=$('#recipeDialog');if(!dialog.open)dialog.showModal();$('#recipeBody').scrollTop=0;
 }
+$('#recipePeople').innerHTML=Array.from({length:20},(_,index)=>{const people=index+1;return `<option value="${people}">${people} ${people===1?'persona':'personas'}</option>`}).join('');
+$('#recipePeople').addEventListener('change',()=>{const next=Number($('#recipePeople').value);try{window.CocinaPortions.validatePeople(next)}catch{$('#recipePeople').value=String(selectedPeople);return}selectedPeople=next;try{localStorage.setItem(portionPreferenceKey,JSON.stringify({people:selectedPeople}))}catch{}renderOpenedRecipe();$('#recipeBody').scrollTop=0;});
 function renderRecipeLibrary(){
  const filter=$('#categoryFilter'),category=filter.value,categories=categoryPolicy.values;
  const familyFilter=$('#familyFilter'),family=familyFilter.value,families=[...familyNodeNames].sort((a,b)=>familyOptionLabel(a).localeCompare(familyOptionLabel(b),'es'));

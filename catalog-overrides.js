@@ -1166,3 +1166,85 @@ window.COCINA_CATEGORY_POLICY = {
   },
   "platosIncludesMenuBBQ": true
 };
+window.COCINA_RECIPE_PORTIONS = [
+  {
+    "names": [
+      "Carbonara"
+    ],
+    "sourceType": "word_per_person",
+    "basePeople": 1,
+    "coverage": "partial",
+    "review": {
+      "status": "pending_owner_validation"
+    },
+    "note": "Cantidades por versión: elige una de las dos preparaciones.",
+    "quantities": [
+      {
+        "group": "Versión 1",
+        "label": "Huevos",
+        "amount": 2,
+        "unit": {
+          "one": "huevo",
+          "many": "huevos"
+        },
+        "evidence": "Versión 1 (2 huevos por cabeza):"
+      },
+      {
+        "group": "Versión económica",
+        "label": "Huevos",
+        "amount": 1,
+        "unit": {
+          "one": "huevo",
+          "many": "huevos"
+        },
+        "evidence": "Versión más económica (huevo por cabeza)."
+      }
+    ]
+  },
+  {
+    "names": [
+      "Ceviche"
+    ],
+    "sourceType": "word_per_person",
+    "basePeople": 1,
+    "coverage": "partial",
+    "review": {
+      "status": "pending_owner_validation"
+    },
+    "note": "El montado especial es una preparación opcional.",
+    "quantities": [
+      {
+        "group": "Montado final",
+        "label": "Leche de tigre",
+        "amount": 6,
+        "unit": {
+          "one": "cucharada",
+          "many": "cucharadas"
+        },
+        "evidence": "Añadir la leche de tigre (6 cucharadas por ración)"
+      },
+      {
+        "group": "Montado especial · opcional",
+        "label": "Gambas o langostinos pequeños",
+        "amount": 3,
+        "maxAmount": 4,
+        "unit": {
+          "one": "unidad",
+          "many": "unidades"
+        },
+        "evidence": "como el resto de pescado (3 o 4 por cabeza)."
+      },
+      {
+        "group": "Montado especial · opcional",
+        "label": "Gambones",
+        "amount": 1,
+        "maxAmount": 2,
+        "unit": {
+          "one": "unidad",
+          "many": "unidades"
+        },
+        "evidence": "a la plancha uno o dos gambones por cabeza."
+      }
+    ]
+  }
+];

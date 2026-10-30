@@ -1,5 +1,5 @@
-const CACHE = 'cocina-c6c6b8fa57d9';
-const ASSETS = ['./', './index.html', './styles.css', './interaction.css', './mobile.css', './catalog-data.js', './catalog-overrides.js', './app.js', './pwa.js', './manifest.webmanifest', './icons/cocina.svg', './icons/cocina-192.png', './icons/cocina-512.png'];
+const CACHE = 'cocina-c890195513a8';
+const ASSETS = ['./', './index.html', './styles.css', './interaction.css', './mobile.css', './catalog-data.js', './catalog-overrides.js', './portions.js', './app.js', './pwa.js', './manifest.webmanifest', './icons/cocina.svg', './icons/cocina-192.png', './icons/cocina-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
 });

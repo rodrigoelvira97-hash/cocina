@@ -81,11 +81,17 @@
     <form method="dialog"><button class="close-button" aria-label="Cerrar">×</button></form>
     <div class="eyebrow" id="recipeKind">RECETA</div><h2 id="recipeTitle"></h2>
     <div id="recipeMeta" class="recipe-meta"></div>
+    <div id="recipePortions" class="recipe-portions" hidden>
+      <label for="recipePeople">Personas</label>
+      <select id="recipePeople" aria-describedby="recipePortionStatus"></select>
+      <p id="recipePortionStatus" class="portion-status" role="status"></p>
+    </div>
     <div class="recipe-body" id="recipeBody"></div>
-    <div class="dialog-footer"><span>El detalle completo se sincronizará desde Word en la siguiente fase.</span><button class="secondary-button" id="wordButton" disabled>Ver detalle en Word</button></div>
+    <div class="dialog-footer"><span>Recetario en revisión.</span><button class="secondary-button" id="wordButton" disabled>Ver detalle en Word</button></div>
   </dialog>
   <script src="catalog-data.js"></script>
   <script src="catalog-overrides.js"></script>
+  <script src="portions.js"></script>
   <script src="app.js"></script>
   <script src="pwa.js"></script>
 </body>
