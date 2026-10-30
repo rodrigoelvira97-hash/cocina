@@ -600,13 +600,19 @@ window.COCINA_FAMILY_BRANCHES = [
   {
     "family": "Cerdo",
     "subfamily": "Solomillo de cerdo",
-    "recipe": "Pincho de solomillo de cerdo"
+    "recipe": "Pincho de solomillo de cerdo",
+    "path": [
+      "Carne",
+      "Cerdo",
+      "Solomillo de cerdo"
+    ]
   }
 ];
 window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Pincho de solomillo de cerdo",
     "path": [
+      "Carne",
       "Cerdo",
       "Solomillo de cerdo"
     ],
@@ -615,6 +621,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Tacos de pollo",
     "path": [
+      "Carne",
       "Pollo"
     ],
     "classification": "rule"
@@ -671,6 +678,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Morros con garbanzos",
     "path": [
+      "Carne",
       "Cerdo"
     ],
     "classification": "confirmed"
@@ -685,6 +693,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Traseros pollo arroz",
     "path": [
+      "Carne",
       "Pollo"
     ],
     "classification": "confirmed"
@@ -741,6 +750,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Perritos calientes",
     "path": [
+      "Carne",
       "Salchichas"
     ],
     "classification": "confirmed"
@@ -783,6 +793,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Alitas",
     "path": [
+      "Carne",
       "Pollo"
     ],
     "classification": "confirmed"
@@ -790,6 +801,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Pollo asado",
     "path": [
+      "Carne",
       "Pollo"
     ],
     "classification": "confirmed"
@@ -797,6 +809,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Muslos pollo al curry",
     "path": [
+      "Carne",
       "Pollo"
     ],
     "classification": "confirmed"
@@ -860,6 +873,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Magro cerdo y patatas",
     "path": [
+      "Carne",
       "Cerdo"
     ],
     "classification": "confirmed"
@@ -874,6 +888,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Chuleta con espárragos",
     "path": [
+      "Carne",
       "Cerdo"
     ],
     "classification": "confirmed"
@@ -881,6 +896,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Chuletas con patatas",
     "path": [
+      "Carne",
       "Cerdo"
     ],
     "classification": "confirmed"
@@ -995,14 +1011,14 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Pescados"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Tartar de Salmón",
     "path": [
       "Pescados"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Provolone",
@@ -1014,6 +1030,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Chorizo a la sidra",
     "path": [
+      "Carne",
       "Chorizos"
     ],
     "classification": "confirmed"
@@ -1021,6 +1038,7 @@ window.COCINA_FAMILY_PATHS = [
   {
     "recipe": "Salchichas encebolladas",
     "path": [
+      "Carne",
       "Salchichas"
     ],
     "classification": "rule"

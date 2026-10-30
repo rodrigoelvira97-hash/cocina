@@ -53,8 +53,12 @@ function categoryFor(value,inMenu){const category=canonicalCategory(value);retur
 function matchesCategoryFilter(recipe,selected){return !selected||(selected==='Platos'?recipe.calendarIncluded&&recipe.category!=='Tapas'&&(categoryPolicy.platosIncludesMenuBBQ!==false||recipe.category==='Platos'):recipe.category===selected)}
 const variantGroups=window.COCINA_VARIANT_GROUPS||[];
 const familyBranches=window.COCINA_FAMILY_BRANCHES||[];
-const familyPaths=window.COCINA_FAMILY_PATHS||familyBranches.map(branch=>({recipe:branch.recipe,path:[branch.family,branch.subfamily]}));
+const familyPaths=window.COCINA_FAMILY_PATHS||familyBranches.map(branch=>({recipe:branch.recipe,path:branch.path||[branch.family,branch.subfamily]}));
 const familyNodeNames=[...new Set(familyPaths.flatMap(entry=>entry.path))];
+const familyNodePaths=new Map();for(const entry of familyPaths)entry.path.forEach((name,index)=>familyNodePaths.set(normalizeHeadingTitle(name),entry.path.slice(0,index+1)));
+function familyNodePath(name){return familyNodePaths.get(normalizeHeadingTitle(name))||[]}
+function familyOptionLabel(name){return familyNodePath(name).join(' › ')||name}
+function familyDescription(name){const path=familyNodePath(name);return path.length>1?`Subfamilia de ${path[path.length-2]}`:'Familia de recetas'}
 const familyWordTitles={Arroces:'Arroz'};
 function familyPathFor(name){return familyPaths.find(entry=>normalizeHeadingTitle(entry.recipe)===normalizeHeadingTitle(name))?.path||[]}
 function isFamilyNode(name){return familyNodeNames.some(title=>normalizeHeadingTitle(title)===normalizeHeadingTitle(name))}
@@ -123,7 +127,7 @@ const $=s=>document.querySelector(s);
 const grid=$('#calendarGrid'), alertBox=$('#alerts');
 let viewed=new Date(); viewed.setDate(1);
 const storeKey='cocina-calendar-v1';
-const scheduleVersion=10;
+const scheduleVersion=11;
 let saved=JSON.parse(localStorage.getItem(storeKey)||'{}');
 function migrateSavedNachos(){const row=catalog.menu.find(r=>r.name.trim().toLocaleLowerCase('es')==='nachos'),canonical=row?`${row.id}#1`:'' ,legacy=row?`${row.id}#2`:'';if(!legacy)return;for(const month of Object.values(saved)){for(const [name,manual] of [['manual',true],['schedule',false]]){const entries=month?.[name];if(!entries)continue;for(const [k,ids] of Object.entries(entries)){if(!Array.isArray(ids))continue;if(manual)entries[k]=[...new Set(ids.map(id=>id===legacy?canonical:id))];else if(ids.includes(legacy)){entries[k]=ids.filter(id=>id!==legacy);month.needsRegeneration=true}}}}}
 migrateSavedNachos();
@@ -254,9 +258,9 @@ function familyRelationsHTML(recipe){
 function openRecipe(id){
  const r=recipes.find(item=>item.id===id)||catalogRecipes.find(item=>item.id===id);if(!r)return;
  const technique=r.contentKind==='technique',variantGroup=!!r.variantGroup,relations=familyRelationsHTML(r);
- $('#recipeKind').textContent=variantGroup?'PREPARACIONES':technique?'TÉCNICA':r.familyOnly?(r.contentKind==='family'?'FAMILIA':'CONSULTA'):'RECETA';
+ $('#recipeKind').textContent=variantGroup?'PREPARACIONES':technique?'TÉCNICA':r.familyOnly?(r.contentKind==='family'?(familyNodePath(r.name).length>1?'SUBFAMILIA':'FAMILIA'):'CONSULTA'):'RECETA';
  $('#recipeTitle').textContent=r.name;
- $('#recipeMeta').textContent=variantGroup?'Elige el relleno para consultar su preparación':technique?'Guía de técnica y recomendaciones':r.familyOnly?(r.contentKind==='family'?'Familia de recetas':'Familia / información'):[r.category,r.type,r.moment,r.single===undefined?'':(r.single?'Plato único':'Necesita acompañamiento'),r.linkStatus].filter(Boolean).join(' · ');
+ $('#recipeMeta').textContent=variantGroup?'Elige el relleno para consultar su preparación':technique?'Guía de técnica y recomendaciones':r.familyOnly?(r.contentKind==='family'?familyDescription(r.name):'Familia / información'):[r.category,r.type,r.moment,r.single===undefined?'':(r.single?'Plato único':'Necesita acompañamiento'),r.linkStatus].filter(Boolean).join(' · ');
  const missing=catalog.headings.some(heading=>normalizeHeadingTitle(heading.title)===normalizeHeadingTitle(r.name))?'En el Word aparece este encabezado, pero no he encontrado texto asociado debajo. Puede ser una ficha pendiente de completar.':'No encuentro un encabezado equivalente en el Word importado. Puede estar con otro nombre o no estar todavía en la copia de trabajo.';
  const note=r.preparationNote?`<p class="recipe-paragraph recipe-note">${escapeHTML(r.preparationNote)}</p>`:'';
  $('#recipeBody').innerHTML=relations+note+(r.body?recipeContentHTML(r.body,r.name):r.preparationNote||r.familyOnly&&relations?'':recipeContentHTML(missing,r.name));
@@ -264,12 +268,12 @@ function openRecipe(id){
 }
 function renderRecipeLibrary(){
  const filter=$('#categoryFilter'),category=filter.value,categories=categoryPolicy.values;
- const familyFilter=$('#familyFilter'),family=familyFilter.value,families=[...familyNodeNames].sort((a,b)=>a.localeCompare(b,'es'));
- familyFilter.innerHTML='<option value="">Todas las familias</option>'+families.map(name=>`<option value="${escapeHTML(name)}">${escapeHTML(name)}</option>`).join('')+'<option value="__pending__">Sin familia asignada</option>';familyFilter.value=family;
+ const familyFilter=$('#familyFilter'),family=familyFilter.value,families=[...familyNodeNames].sort((a,b)=>familyOptionLabel(a).localeCompare(familyOptionLabel(b),'es'));
+ familyFilter.innerHTML='<option value="">Todas las familias</option>'+families.map(name=>`<option value="${escapeHTML(name)}">${escapeHTML(familyOptionLabel(name))}</option>`).join('')+'<option value="__pending__">Sin familia asignada</option>';familyFilter.value=family;
  filter.innerHTML='<option value="">Todas las categorías</option>'+categories.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');filter.value=category;
  const search=normalizeHeadingTitle($('#recipeSearch').value),found=catalogRecipes.filter(r=>matchesCategoryFilter(r,category)&&matchesFamilyFilter(r,family)&&(!search||normalizeHeadingTitle(`${r.name} ${r.category} ${r.type} ${familyPathFor(r.name).join(' ')} ${r.body}`).includes(search))).sort((a,b)=>a.name.localeCompare(b.name,'es'));
  $('#recipeCount').textContent=`${found.length} entradas`;
- $('#recipeList').innerHTML=found.map(r=>`<button class="recipe-card" data-recipe="${r.id}"><span class="recipe-card-title">${escapeHTML(r.name)}</span><span class="recipe-card-meta">${escapeHTML(r.variantGroup?'Preparaciones por relleno':r.contentKind==='technique'?'Técnica de cocina':r.familyOnly?(r.contentKind==='family'?'Familia de recetas':'Familia / información'):r.category||r.type||'Sin clasificar')}</span></button>`).join('')||'<p class="empty-library">No hay resultados para esa búsqueda.</p>';
+ $('#recipeList').innerHTML=found.map(r=>`<button class="recipe-card" data-recipe="${r.id}"><span class="recipe-card-title">${escapeHTML(r.name)}</span><span class="recipe-card-meta">${escapeHTML(r.variantGroup?'Preparaciones por relleno':r.contentKind==='technique'?'Técnica de cocina':r.familyOnly?(r.contentKind==='family'?familyDescription(r.name):'Familia / información'):r.category||r.type||'Sin clasificar')}</span></button>`).join('')||'<p class="empty-library">No hay resultados para esa búsqueda.</p>';
  $('#recipeList').querySelectorAll('[data-recipe]').forEach(el=>el.onclick=()=>openRecipe(el.dataset.recipe))
 }
 function ensureMonth(){const m=saved[`${viewed.getFullYear()}-${viewed.getMonth()+1}`];const hasAssignments=Object.values(m?.schedule||{}).some(ids=>Array.isArray(ids)&&ids.length)||Object.values(m?.manual||{}).some(ids=>Array.isArray(ids)&&ids.length);if(!m?.deliberatelyCleared&&(!m?.schedule||m?.algorithmVersion!==scheduleVersion||m?.needsRegeneration||!hasAssignments))generate();else{render();showWarnings([])}}
