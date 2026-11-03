@@ -511,9 +511,17 @@ window.COCINA_RECIPE_RULES = [
     "category": "BBQ"
   },
   {
+    "name": "Bravas",
+    "category": "Tapas"
+  },
+  {
     "name": "Chorizo a la sidra",
     "moment": "Cena",
     "single": false,
+    "category": "Tapas"
+  },
+  {
+    "name": "Esferas de masa quebrada u hojaldre horneadas",
     "category": "Tapas"
   },
   {
@@ -530,6 +538,18 @@ window.COCINA_RECIPE_RULES = [
     "category": "Tapas"
   },
   {
+    "name": "Mojo picón",
+    "category": "Tapas"
+  },
+  {
+    "name": "Morros",
+    "category": "Tapas"
+  },
+  {
+    "name": "Pico de gallo",
+    "category": "Tapas"
+  },
+  {
     "name": "Pincho de solomillo de cerdo",
     "moment": "Cena",
     "single": false,
@@ -539,6 +559,26 @@ window.COCINA_RECIPE_RULES = [
     "name": "Rollitos de bacón",
     "moment": "Cena",
     "single": false,
+    "category": "Tapas"
+  },
+  {
+    "name": "Sardina ahumada",
+    "category": "Tapas"
+  },
+  {
+    "name": "Tartar de Carne",
+    "category": "Tapas"
+  },
+  {
+    "name": "Tartar de fuet",
+    "category": "Tapas"
+  },
+  {
+    "name": "Te como los morros",
+    "category": "Tapas"
+  },
+  {
+    "name": "Costillas",
     "category": "Tapas"
   },
   {
@@ -554,10 +594,30 @@ window.COCINA_RECIPE_RULES = [
     "freq": "max 1"
   },
   {
+    "name": "Gambas al ajillo",
+    "category": "Tapas"
+  },
+  {
     "name": "Gambones a la plancha",
     "moment": "Cena",
     "single": false,
     "freq": "max 1"
+  },
+  {
+    "name": "Lomo casero",
+    "category": "Tapas"
+  },
+  {
+    "name": "Torreznos",
+    "category": "Tapas"
+  },
+  {
+    "name": "Tortillas de Camarones",
+    "category": "Tapas"
+  },
+  {
+    "name": "Zamburiñas",
+    "category": "Tapas"
   },
   {
     "name": "Parrilla",

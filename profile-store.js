@@ -7,7 +7,8 @@
   const defaultProfile = () => ({
     schemaVersion: 1,
     profileName: 'Mi configuración',
-    mode: 'advanced',
+    mode: 'basic',
+    basicRules: { noRepeatDishSameDay: true, noRepeatKeyProducts: true },
     periods: { monthly: true, weekly: false, daily: true },
     rules: [
       { id: 'carbonara-friday-monthly', type: 'frequency', period: 'monthly', target: { kind: 'dish', id: 'MEN-A0E0A499', name: 'Carbonara' }, operator: 'exact', count: 2, weekdays: [5], meal: 'Comida', gapWeeks: 1, strength: 'mandatory', enabled: true, applied: true, origin: 'personal' },
@@ -25,7 +26,8 @@
       if (!carbonara) rules.unshift(defaults.rules[0]);
       else Object.assign(carbonara, defaults.rules[0], carbonara, { applied: true });
       const periods = { ...defaults.periods, ...(saved.periods || {}), monthly: saved.periods?.monthly === false ? false : true };
-      return { ...defaults, ...saved, periods, rules, recipes: Array.isArray(saved.recipes) ? saved.recipes : [] };
+      const mode = saved.mode === 'standard' ? 'basic' : saved.mode || defaults.mode;
+      return { ...defaults, ...saved, mode, basicRules: { ...defaults.basicRules, ...(saved.basicRules || {}) }, periods, rules, recipes: Array.isArray(saved.recipes) ? saved.recipes : [] };
     } catch { return defaultProfile(); }
   }
   function save(profile, storage = globalThis.localStorage) {

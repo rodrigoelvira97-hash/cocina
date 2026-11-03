@@ -69,39 +69,65 @@
           <button class="avatar" aria-label="Perfil">R</button>
         </header>
         <section class="recipes-section" id="recipesSection">
-        <div class="recipes-heading"><div><div class="eyebrow">BIBLIOTECA</div><h2>Recetas y contenido</h2></div><span id="recipeCount" class="count-pill"></span></div>
-        <div class="recipe-filters"><input id="recipeSearch" type="search" placeholder="Buscar receta o palabra del contenido"><select id="familyFilter" aria-label="Filtrar por familia"><option value="">Todas las familias</option></select><select id="categoryFilter" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option></select></div>
+        <div class="recipes-heading"><div><div class="eyebrow">BIBLIOTECA</div><h2>Recetas</h2></div><span id="recipeCount" class="count-pill"></span></div>
+        <div class="recipe-filters">
+          <div class="recipe-search-group">
+            <label class="recipe-search-label" for="recipeSearch">Buscar recetas o contenido</label>
+            <input id="recipeSearch" type="search" placeholder="Ej.: carbonara, pasta, cebolla…" autocomplete="off">
+            <p id="recipeSearchHint" class="recipe-search-hint" role="status" aria-live="polite">Listado completo sin filtrar. Si quieres afinar la búsqueda, usa los filtros.</p>
+            <button type="button" id="clearRecipeFilters" class="recipe-clear-filters" hidden>Limpiar búsqueda y filtros</button>
+          </div>
+          <label class="recipe-filter-control"><span>Filtrar recetas</span><select id="recipeFilter" aria-label="Filtrar recetas"><option value="">Todas las recetas</option></select></label>
+        </div>
         <div id="recipeList" class="recipe-list"></div>
         </section>
       </section>
 
       <section class="app-view settings-view" id="settingsView" aria-labelledby="settingsHeading" hidden>
         <header class="topbar"><div><div class="eyebrow">MI PERFIL</div><h1 id="settingsHeading">Ajustes</h1></div></header>
-        <section class="settings-section">
-          <div class="settings-intro"><h2>Configuración de la app</h2><p>Empieza con la configuración estándar o activa tus reglas personales. Tus reglas se aplican solo a este perfil.</p></div>
-          <div class="settings-mode-switch" role="group" aria-label="Modo de configuración">
-            <button type="button" id="standardModeButton" class="settings-mode-button">Estándar</button>
-            <button type="button" id="advancedModeButton" class="settings-mode-button">Avanzada</button>
-          </div>
-          <div id="standardSettingsPanel" class="settings-panel" hidden>
-            <h3>Configuración estándar</h3>
-            <p>Usa las reglas generales del calendario y las recetas base. Las reglas personales editables no se aplican en este modo. Las reglas antiguas que aún viven en el generador siguen vigentes y se separarán en una fase posterior.</p>
-            <div id="ruleSuggestions" class="rule-suggestions"></div>
-          </div>
-          <div id="advancedSettingsPanel" class="settings-panel" hidden>
-            <h3>Normas y reglas personales</h3>
-            <p class="settings-local-note">Este prototipo guarda tus ajustes en este navegador. La sincronización en OneDrive se configurará después de registrar el acceso de la app. Las reglas de esta sección se aplican solo a tu perfil.</p>
-            <div id="rulePeriods" class="rule-periods">
-              <section class="rule-period is-active"><header class="rule-period-header"><div><h4>Mensual</h4><p>Frecuencias y límites de platos o familias</p></div></header><div class="rule-period-content"><p class="rule-period-suggestion">Define cuántas veces puede o debe aparecer un plato o familia durante el mes.</p></div></section>
-              <section class="rule-period"><header class="rule-period-header"><div><h4>Semanal</h4><p>Días disponibles y variedad de la semana</p></div></header><div class="rule-period-content"><p class="rule-period-suggestion">Elige días permitidos, frecuencia semanal y si una familia puede repetirse esa semana.</p></div></section>
-              <section class="rule-period is-active"><header class="rule-period-header"><div><h4>Diaria</h4><p>Combinaciones para comida y cena</p></div></header><div class="rule-period-content"><p class="rule-period-suggestion">No repetir familia en una misma cena.</p></div></section>
-            </div>
+        <section id="settingsLanding" class="settings-section settings-landing">
+          <div class="settings-intro"><h2>¿Qué quieres hacer?</h2><p>Elige una opción para continuar.</p></div>
+          <div class="settings-entry-grid">
+            <button type="button" id="openConfiguration" class="settings-entry-card"><span class="settings-entry-icon">⚙</span><span><strong>Configuración</strong><small>Elige reglas básicas o avanzadas para tu calendario.</small></span><span class="settings-entry-arrow" aria-hidden="true">›</span></button>
+            <button type="button" id="openAddRecipes" class="settings-entry-card"><span class="settings-entry-icon">＋</span><span><strong>Añadir recetas</strong><small>Importa o crea tus propias recetas.</small></span><span class="settings-entry-arrow" aria-hidden="true">›</span></button>
           </div>
         </section>
-        <section class="settings-section personal-recipes-section">
+        <section id="configurationHome" class="settings-section" hidden>
+          <button type="button" class="settings-back-button" id="backSettingsHomeFromConfig">‹ Ajustes</button>
+          <div class="settings-intro"><h2>Configuración de la app</h2><p>Selecciona el nivel que quieres configurar.</p></div>
+          <div class="settings-entry-grid settings-mode-grid">
+            <button type="button" id="selectBasicConfiguration" class="settings-entry-card settings-mode-card"><span><strong>Básica</strong><small>Reglas habituales, activas o desactivables.</small></span><span class="settings-entry-arrow" aria-hidden="true">›</span></button>
+            <button type="button" id="selectAdvancedConfiguration" class="settings-entry-card settings-mode-card"><span><strong>Avanzada</strong><small>Normas personales por mes, semana y día.</small></span><span class="settings-entry-arrow" aria-hidden="true">›</span></button>
+          </div>
+        </section>
+        <section id="basicSettingsView" class="settings-section" hidden>
+          <button type="button" class="settings-back-button" id="backBasicToConfig">‹ Configuración</button>
+          <div class="settings-intro"><h2>Básica</h2><p>Normas predeterminadas del calendario. Puedes desactivar cualquiera.</p></div>
+          <div id="basicRulesList" class="basic-rules-list">
+            <label class="personal-rule-card"><input type="checkbox" data-basic-rule="noRepeatDishSameDay"><span><strong>No repetir plato el mismo día</strong><small>Evita que el mismo plato aparezca en comida y cena.</small></span></label>
+            <label class="personal-rule-card"><input type="checkbox" data-basic-rule="noRepeatKeyProducts"><span><strong>No repetir productos clave en el menú</strong><small>Compara los platos de comida y cena del mismo día; por ejemplo, Setas + Champiñones o Chorizo a la sidra + Papas a la riojana.</small></span></label>
+          </div>
+        </section>
+        <section id="advancedSettingsView" class="settings-section" hidden>
+          <button type="button" class="settings-back-button" id="backAdvancedToConfig">‹ Configuración</button>
+          <div class="settings-intro"><h2>Avanzada</h2><p>Organiza tus reglas en tres niveles: decide el mes, distribuye la semana y concreta cada día.</p></div>
+          <div id="rulePeriods" class="rule-periods">
+            <section class="rule-period" data-period="monthly"><header class="rule-period-header"><div><h4>Mensual</h4><p>Frecuencia para el mes.</p></div></header></section>
+            <section class="rule-period" data-period="weekly"><header class="rule-period-header"><div><h4>Semanal</h4><p>Frecuencia dentro de cada semana.</p></div></header></section>
+            <section class="rule-period" data-period="daily"><header class="rule-period-header"><div><h4>Diaria</h4><p>Combinaciones de comida y cena.</p></div></header></section>
+          </div>
+        </section>
+        <section id="addRecipesView" class="settings-section personal-recipes-section" hidden>
+          <button type="button" class="settings-back-button" id="backRecipesToSettingsHome">‹ Ajustes</button>
           <div class="settings-intro"><h2>Añadir recetas</h2><p>La biblioteca base se conserva intacta. Las recetas que añadas se guardan separadas en tu perfil.</p></div>
-          <div class="personal-recipe-import"><label for="personalRecipeFile">Importar un Word o texto</label><input id="personalRecipeFile" type="file" accept=".docx,.txt,.md,text/plain"><p>El contenido se lee en este navegador y queda como borrador para revisar.</p><p id="personalRecipeImportStatus" class="ticket-status" role="status" hidden></p></div>
-          <form id="personalRecipeForm" class="personal-recipe-form">
+          <div class="settings-entry-grid recipe-management-options">
+            <button type="button" id="selectAddPersonalRecipe" class="settings-entry-card settings-mode-card"><span><strong>Añadir receta</strong><small>Crear una ficha nueva en tu recetario personal.</small></span><span class="settings-entry-arrow" aria-hidden="true">›</span></button>
+            <button type="button" id="selectModifyExistingRecipe" class="settings-entry-card settings-mode-card"><span><strong>Modificar recetas existentes</strong><small>Ajustar sus categorías o su familia en tu perfil.</small></span><span class="settings-entry-arrow" aria-hidden="true">›</span></button>
+          </div>
+          <section id="addPersonalRecipePanel" class="recipe-management-panel" hidden>
+            <button type="button" class="settings-back-button" data-back-recipe-options>‹ Añadir recetas</button>
+            <div class="personal-recipe-import"><label for="personalRecipeFile">Importar un Word o texto</label><input id="personalRecipeFile" type="file" accept=".docx,.txt,.md,text/plain"><p>El contenido se lee en este navegador y queda como borrador para revisar.</p><p id="personalRecipeImportStatus" class="ticket-status" role="status" hidden></p></div>
+            <form id="personalRecipeForm" class="personal-recipe-form">
             <label>Nombre<input id="personalRecipeName" required maxlength="100" placeholder="Ej.: Crema de calabaza"></label>
             <label>Familia<select id="personalRecipeFamily"><option value="">Sin familia (por ahora)</option></select></label>
             <label>Categoría<select id="personalRecipeCategory"><option>Platos</option><option>Tapas</option><option>BBQ</option><option>Bebidas</option></select></label>
@@ -112,8 +138,19 @@
             <label>Preparación<textarea id="personalRecipePreparation" rows="5" placeholder="Pasos, uno por línea"></textarea></label>
             <label>Notas o texto importado<textarea id="personalRecipeNotes" rows="3" placeholder="Notas, variantes o texto que todavía no esté clasificado"></textarea></label>
             <button class="primary-button" type="submit">Guardar en mis recetas</button>
-          </form>
-          <div id="personalRecipeList" class="personal-recipe-list"></div>
+            </form>
+            <div id="personalRecipeList" class="personal-recipe-list"></div>
+          </section>
+          <section id="modifyExistingRecipePanel" class="recipe-management-panel" hidden>
+            <button type="button" class="settings-back-button" data-back-recipe-options>‹ Añadir recetas</button>
+            <div class="settings-intro"><h3>Modificar recetas existentes</h3><p>Los cambios se guardan en tu perfil y no modifican el recetario base.</p></div>
+            <form id="recipeClassificationForm" class="personal-recipe-form">
+              <label>Receta<select id="classificationRecipe" required><option value="">Elige una receta</option></select></label>
+              <fieldset class="classification-category-fieldset"><legend>Categorías adicionales</legend><div id="classificationCategoryOptions" class="classification-category-options"></div><small>Se suman a las categorías actuales de la receta.</small></fieldset>
+              <div class="classification-family-field"><span>Familia</span><select id="classificationFamily"><option value="">No cambiar la familia actual</option></select><div id="classificationSubfamilySelectors"></div><small id="classificationCurrentFamily" class="personal-recipe-help"></small></div>
+              <button class="primary-button" type="submit">Guardar clasificación</button>
+            </form>
+          </section>
         </section>
       </section>
     </main>
@@ -201,7 +238,6 @@
         const route = location.hash.slice(1).toLowerCase();
         const id = { calendario: 'calendarView', hoy: 'todayView', recetas: 'recipesView', ajustes: 'settingsView' }[route] || (matchMedia('(max-width:700px)').matches ? 'todayView' : 'calendarView');
         document.querySelectorAll('.app-view').forEach(view => { view.hidden = view.id !== id; });
-        if (id === 'settingsView' && document.getElementById('advancedSettingsPanel')) document.getElementById('advancedSettingsPanel').hidden = false;
         document.title = `Cocina · ${names[route] || (id === 'todayView' ? 'Hoy' : 'Calendario')}`;
       };
       showRoute();
