@@ -23,6 +23,7 @@
         <a class="nav-item" href="#calendario" id="calendarNav"><span>▦</span> Calendario</a>
         <a class="nav-item" href="#hoy" id="todayNav"><span>◷</span> Hoy</a>
         <a class="nav-item" href="#recetas" id="recipesNav"><span>⌕</span> Recetas</a>
+        <a class="nav-item" href="#ajustes" id="settingsNav"><span>⚙</span> Ajustes</a>
       </nav>
       <div class="sidebar-bottom"><span class="sync-dot"></span> Cocina · versión de prueba <small>Los cambios se guardan en este dispositivo</small></div>
     </aside>
@@ -73,42 +74,105 @@
         <div id="recipeList" class="recipe-list"></div>
         </section>
       </section>
+
+      <section class="app-view settings-view" id="settingsView" aria-labelledby="settingsHeading" hidden>
+        <header class="topbar"><div><div class="eyebrow">MI PERFIL</div><h1 id="settingsHeading">Ajustes</h1></div></header>
+        <section class="settings-section">
+          <div class="settings-intro"><h2>Configuración de la app</h2><p>Empieza con la configuración estándar o activa tus reglas personales. Tus reglas se aplican solo a este perfil.</p></div>
+          <div class="settings-mode-switch" role="group" aria-label="Modo de configuración">
+            <button type="button" id="standardModeButton" class="settings-mode-button">Estándar</button>
+            <button type="button" id="advancedModeButton" class="settings-mode-button">Avanzada</button>
+          </div>
+          <div id="standardSettingsPanel" class="settings-panel" hidden>
+            <h3>Configuración estándar</h3>
+            <p>Usa las reglas generales del calendario y las recetas base. Las reglas personales editables no se aplican en este modo. Las reglas antiguas que aún viven en el generador siguen vigentes y se separarán en una fase posterior.</p>
+            <div id="ruleSuggestions" class="rule-suggestions"></div>
+          </div>
+          <div id="advancedSettingsPanel" class="settings-panel" hidden>
+            <h3>Normas y reglas personales</h3>
+            <p class="settings-local-note">Este prototipo guarda tus ajustes en este navegador. La sincronización en OneDrive se configurará después de registrar el acceso de la app. Las reglas de esta sección se aplican solo a tu perfil.</p>
+            <div id="rulePeriods" class="rule-periods">
+              <section class="rule-period is-active"><header class="rule-period-header"><div><h4>Mensual</h4><p>Frecuencias y límites de platos o familias</p></div></header><div class="rule-period-content"><p class="rule-period-suggestion">Define cuántas veces puede o debe aparecer un plato o familia durante el mes.</p></div></section>
+              <section class="rule-period"><header class="rule-period-header"><div><h4>Semanal</h4><p>Días disponibles y variedad de la semana</p></div></header><div class="rule-period-content"><p class="rule-period-suggestion">Elige días permitidos, frecuencia semanal y si una familia puede repetirse esa semana.</p></div></section>
+              <section class="rule-period is-active"><header class="rule-period-header"><div><h4>Diaria</h4><p>Combinaciones para comida y cena</p></div></header><div class="rule-period-content"><p class="rule-period-suggestion">No repetir familia en una misma cena.</p></div></section>
+            </div>
+          </div>
+        </section>
+        <section class="settings-section personal-recipes-section">
+          <div class="settings-intro"><h2>Añadir recetas</h2><p>La biblioteca base se conserva intacta. Las recetas que añadas se guardan separadas en tu perfil.</p></div>
+          <div class="personal-recipe-import"><label for="personalRecipeFile">Importar un Word o texto</label><input id="personalRecipeFile" type="file" accept=".docx,.txt,.md,text/plain"><p>El contenido se lee en este navegador y queda como borrador para revisar.</p><p id="personalRecipeImportStatus" class="ticket-status" role="status" hidden></p></div>
+          <form id="personalRecipeForm" class="personal-recipe-form">
+            <label>Nombre<input id="personalRecipeName" required maxlength="100" placeholder="Ej.: Crema de calabaza"></label>
+            <label>Familia<select id="personalRecipeFamily"><option value="">Sin familia (por ahora)</option></select></label>
+            <label>Categoría<select id="personalRecipeCategory"><option>Platos</option><option>Tapas</option><option>BBQ</option><option>Bebidas</option></select></label>
+            <div id="personalRecipeMealSettings" class="personal-recipe-planning"><label>Se puede planificar en<select id="personalRecipeMoment"><option>Comida</option><option>Cena</option><option>Ambos</option></select></label><label class="personal-recipe-check"><input id="personalRecipeSingle" type="checkbox" checked><span>Puede ser plato único</span></label></div>
+            <div id="personalRecipeTapasSettings" class="personal-recipe-planning-note" hidden><label class="personal-recipe-check"><input id="personalRecipeTapasMenu" type="checkbox" checked><span><strong>También incluir en el calendario</strong><small>Se usará como acompañamiento en cenas; nunca contará como plato único.</small></span></label></div>
+            <p id="personalRecipeNonPlanningNote" class="personal-recipe-planning-note" hidden>BBQ y Bebidas se guardan para consulta; no se ofrecen como opciones del calendario.</p>
+            <label>Ingredientes<textarea id="personalRecipeIngredients" rows="4" placeholder="Un ingrediente por línea"></textarea></label>
+            <label>Preparación<textarea id="personalRecipePreparation" rows="5" placeholder="Pasos, uno por línea"></textarea></label>
+            <label>Notas o texto importado<textarea id="personalRecipeNotes" rows="3" placeholder="Notas, variantes o texto que todavía no esté clasificado"></textarea></label>
+            <button class="primary-button" type="submit">Guardar en mis recetas</button>
+          </form>
+          <div id="personalRecipeList" class="personal-recipe-list"></div>
+        </section>
+      </section>
     </main>
   </div>
 
   <dialog id="mealEditorDialog" class="meal-editor-dialog" aria-labelledby="mealEditorTitle"></dialog>
   <dialog id="generationDialog" class="generation-dialog" aria-labelledby="generationTitle">
     <form method="dialog" class="generation-dialog-close"><button class="close-button" aria-label="Cerrar">×</button></form>
-    <div class="eyebrow">PLANIFICACIÓN DEL MES</div>
+    <div class="eyebrow" id="generationEyebrow">PLANIFICACIÓN DEL MES</div>
     <h2 id="generationTitle">Generar calendario</h2>
-    <label class="generation-label" for="generationMode">Cómo quieres preparar el mes</label>
-    <select id="generationMode" class="generation-select">
-      <option value="elaborados">Elaborados · elaborados y supervivencia</option>
-      <option value="supervivencia">Supervivencia · solo descripciones marcadas así</option>
-      <option value="ticket">Con ticket disponible · priorizar lo comprado</option>
-    </select>
+    <fieldset class="scope-choice">
+      <legend>¿Qué periodo quieres planificar?</legend>
+      <label><input type="radio" name="planningScope" value="month" checked><span>Mes</span></label>
+      <label><input type="radio" name="planningScope" value="week"><span>Semana</span></label>
+    </fieldset>
+    <label id="weekChoiceLabel" class="generation-label" for="planningWeek" hidden>Semana del mes</label>
+    <select id="planningWeek" class="generation-select" hidden></select>
+    <label id="preserveWeeklyPlansOption" class="purchase-option preserve-week-plans" hidden>
+      <input type="checkbox" id="preserveWeeklyPlans" checked>
+      <span><strong>Conservar las semanas ya generadas</strong><small id="preserveWeeklyPlansSummary"></small></span>
+    </label>
+    <fieldset class="menu-profile-choice">
+      <legend>¿Qué tipo de platos quieres incluir?</legend>
+      <label><input type="radio" name="menuProfile" value="elaborados" checked><span><strong>Elaborados</strong><small>Platos sin la marca «supervivencia»</small></span></label>
+      <label><input type="radio" name="menuProfile" value="supervivencia"><span><strong>Supervivencia</strong><small>Solo platos marcados así en su descripción</small></span></label>
+      <label><input type="radio" name="menuProfile" value="mixto"><span><strong>Mixto</strong><small>Incluye elaborados y supervivencia</small></span></label>
+    </fieldset>
+    <details id="purchaseSettings" class="purchase-settings">
+      <summary>Compra: presupuesto y tickets <small>(opcional)</small></summary>
+      <label class="purchase-option"><input type="checkbox" id="useBudget"><span><strong>Establecer presupuesto</strong><small id="budgetPeriodHint">Presupuesto orientativo para el mes</small></span></label>
+      <div id="budgetOptions" hidden>
+        <label class="generation-label" for="budgetAmount">Presupuesto (€)</label>
+        <input id="budgetAmount" class="generation-input" type="number" min="1" step="0.01" inputmode="decimal" placeholder="Ej.: 300">
+        <p class="generation-help">Se guardará como referencia. Aún faltan precios y cantidades fiables para garantizar que el menú se ajuste al importe.</p>
+      </div>
+      <label class="purchase-option"><input type="checkbox" id="useTicket"><span><strong>Usar ticket de compra</strong><small>Priorizar ingredientes disponibles</small></span></label>
+      <section id="ticketOptions" class="ticket-options" hidden>
+        <h3>Tickets de compra</h3>
+        <p>Elige uno o varios. Puedes quitar de la lista lo que ya no tengas.</p>
+        <div id="ticketList" class="ticket-list"></div>
+        <label class="generation-label" for="ticketName">Añadir ticket (tienda o fecha)</label>
+        <input id="ticketName" class="generation-input" type="text" placeholder="Ej.: Compra del 3 de noviembre">
+        <label class="generation-label" for="ticketPhoto">Leer foto del ticket</label>
+        <input id="ticketPhoto" class="generation-input" type="file" accept="image/jpeg,image/png,image/webp,image/bmp,image/tiff" capture="environment">
+        <p class="ticket-privacy-note">La foto se procesa en este dispositivo. El lector se descarga al usarlo; puedes revisar y corregir el resultado antes de guardarlo.</p>
+        <button type="button" id="readTicket" class="secondary-button">Leer foto</button>
+        <p id="ticketReadStatus" class="ticket-status" role="status" aria-live="polite"></p>
+        <label class="generation-label" for="ticketProducts">Productos detectados · edítalos antes de guardar</label>
+        <textarea id="ticketProducts" class="generation-textarea" rows="5" placeholder="Un producto por línea. También puedes escribirlos o pegarlos aquí."></textarea>
+        <button type="button" id="saveTicket" class="secondary-button">Guardar ticket</button>
+        <h3>Básicos que confirmo tener</h3>
+        <p>Esta lista se edita aquí. Solo cuentan los que marques disponibles.</p>
+        <div id="basicsList" class="basics-list"></div>
+        <label class="generation-label" for="newBasic">Añadir básico</label>
+        <div class="basic-add-row"><input id="newBasic" class="generation-input" type="text" placeholder="Ej.: Pimienta negra"><button type="button" id="addBasic" class="secondary-button">Añadir</button></div>
+        <div id="shoppingPreview" class="shopping-preview" hidden></div>
+      </section>
+    </details>
     <p id="generationModeHelp" class="generation-help"></p>
-    <section id="ticketOptions" class="ticket-options" hidden>
-      <h3>Tickets de compra</h3>
-      <p>Elige uno o varios. Puedes quitar de la lista lo que ya no tengas.</p>
-      <div id="ticketList" class="ticket-list"></div>
-      <label class="generation-label" for="ticketName">Añadir ticket (tienda o fecha)</label>
-      <input id="ticketName" class="generation-input" type="text" placeholder="Ej.: Compra del 3 de noviembre">
-      <label class="generation-label" for="ticketPhoto">Leer foto del ticket</label>
-      <input id="ticketPhoto" class="generation-input" type="file" accept="image/jpeg,image/png,image/webp,image/bmp,image/tiff" capture="environment">
-      <p class="ticket-privacy-note">La foto se procesa en este dispositivo. El lector se descarga al usarlo; puedes revisar y corregir el resultado antes de guardarlo.</p>
-      <button type="button" id="readTicket" class="secondary-button">Leer foto</button>
-      <p id="ticketReadStatus" class="ticket-status" role="status" aria-live="polite"></p>
-      <label class="generation-label" for="ticketProducts">Productos detectados · edítalos antes de guardar</label>
-      <textarea id="ticketProducts" class="generation-textarea" rows="5" placeholder="Un producto por línea. También puedes escribirlos o pegarlos aquí."></textarea>
-      <button type="button" id="saveTicket" class="secondary-button">Guardar ticket</button>
-      <h3>Básicos que confirmo tener</h3>
-      <p>Esta lista se edita aquí. Solo cuentan los que marques disponibles.</p>
-      <div id="basicsList" class="basics-list"></div>
-      <label class="generation-label" for="newBasic">Añadir básico</label>
-      <div class="basic-add-row"><input id="newBasic" class="generation-input" type="text" placeholder="Ej.: Pimienta negra"><button type="button" id="addBasic" class="secondary-button">Añadir</button></div>
-      <div id="shoppingPreview" class="shopping-preview" hidden></div>
-    </section>
     <div class="generation-actions"><button type="button" id="cancelGeneration" class="secondary-button">Cancelar</button><button type="button" id="confirmGeneration" class="primary-button">Generar mes</button></div>
   </dialog>
   <dialog id="recipeDialog" class="recipe-dialog" aria-labelledby="recipeTitle">
@@ -129,12 +193,34 @@
     <div class="recipe-body" id="recipeBody"></div>
     <div class="dialog-footer"><span>Recetario en revisión.</span><button class="secondary-button" id="wordButton" disabled>Ver detalle en Word</button></div>
   </dialog>
+  <div id="startupWarning" class="startup-warning" role="status" hidden>La vista está abierta, pero no se han activado todos los controles. Recarga esta página; si el aviso continúa, el proyecto mostrará aquí el detalle del fallo.</div>
+  <script>
+    (() => {
+      const names = { calendario: 'Calendario', hoy: 'Hoy', recetas: 'Recetas', ajustes: 'Ajustes' };
+      const showRoute = () => {
+        const route = location.hash.slice(1).toLowerCase();
+        const id = { calendario: 'calendarView', hoy: 'todayView', recetas: 'recipesView', ajustes: 'settingsView' }[route] || (matchMedia('(max-width:700px)').matches ? 'todayView' : 'calendarView');
+        document.querySelectorAll('.app-view').forEach(view => { view.hidden = view.id !== id; });
+        if (id === 'settingsView' && document.getElementById('advancedSettingsPanel')) document.getElementById('advancedSettingsPanel').hidden = false;
+        document.title = `Cocina · ${names[route] || (id === 'todayView' ? 'Hoy' : 'Calendario')}`;
+      };
+      showRoute();
+      window.addEventListener('hashchange', showRoute);
+      const warning = document.getElementById('startupWarning');
+      window.addEventListener('error', event => { warning.hidden = false; warning.textContent = `Error al iniciar la app: ${event.message || 'fallo de JavaScript'}. Recarga la página; el detalle se conserva en la consola del navegador.`; });
+      window.addEventListener('unhandledrejection', () => { warning.hidden = false; warning.textContent = 'La app no pudo completar una operación de inicio. Recarga la página; el contenido de Ajustes permanece visible.'; });
+      window.setTimeout(() => {
+        if (document.documentElement.dataset.appReady !== 'true') warning.hidden = false;
+      }, 3500);
+    })();
+  </script>
   <script src="catalog-data.js"></script>
   <script src="catalog-overrides.js"></script>
   <script src="portions.js"></script>
   <script src="recipe-content.js"></script>
   <script src="ticket-tools.js"></script>
   <script src="ticket-ocr.js"></script>
+  <script src="profile-store.js"></script>
   <script src="app.js"></script>
   <script src="pwa.js"></script>
 </body>

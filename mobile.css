@@ -110,4 +110,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .generation-actions { bottom: calc(-18px - env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); }
   .generation-actions button { flex: 1; min-height: 50px; font-size: 15px; }
   .ticket-entry, .basic-entry { font-size: 14px; min-height: 48px; }
+  .settings-section{padding:17px 13px;border-radius:13px}.settings-intro h2{font-size:21px}.settings-intro p,.settings-panel>p{font-size:14px;line-height:1.55}.settings-mode-button{flex:1;font-size:14px}.personal-rule-card{align-items:flex-start;flex-wrap:wrap}.personal-rule-card>span{min-width:calc(100% - 42px)}.personal-rule-card select{margin-left:34px;width:calc(100% - 34px);min-height:46px;font-size:16px}.personal-recipe-row{grid-template-columns:1fr}.personal-recipe-form input:not([type=checkbox]),.personal-recipe-form select,.personal-recipe-form textarea{font-size:16px;min-height:48px}.personal-recipe-card{align-items:flex-start}.personal-recipe-card button{min-height:44px}
 }
+
+  .personal-recipe-planning select{font-size:16px;min-height:48px}.personal-recipe-planning-note{padding:12px}
+  .rule-period-header{align-items:flex-start;flex-direction:column}.period-toggle{min-height:42px}.scope-rule-form input:not([type=checkbox]),.scope-rule-form select{font-size:16px;min-height:48px}.rule-period .personal-rule-card{align-items:flex-start}.rule-period .personal-rule-card select{margin-left:31px;width:calc(100% - 31px)}.weekday-picker label{min-height:42px}
