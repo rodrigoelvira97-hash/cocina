@@ -77,6 +77,40 @@
   </div>
 
   <dialog id="mealEditorDialog" class="meal-editor-dialog" aria-labelledby="mealEditorTitle"></dialog>
+  <dialog id="generationDialog" class="generation-dialog" aria-labelledby="generationTitle">
+    <form method="dialog" class="generation-dialog-close"><button class="close-button" aria-label="Cerrar">×</button></form>
+    <div class="eyebrow">PLANIFICACIÓN DEL MES</div>
+    <h2 id="generationTitle">Generar calendario</h2>
+    <label class="generation-label" for="generationMode">Cómo quieres preparar el mes</label>
+    <select id="generationMode" class="generation-select">
+      <option value="elaborados">Elaborados · elaborados y supervivencia</option>
+      <option value="supervivencia">Supervivencia · solo descripciones marcadas así</option>
+      <option value="ticket">Con ticket disponible · priorizar lo comprado</option>
+    </select>
+    <p id="generationModeHelp" class="generation-help"></p>
+    <section id="ticketOptions" class="ticket-options" hidden>
+      <h3>Tickets de compra</h3>
+      <p>Elige uno o varios. Puedes quitar de la lista lo que ya no tengas.</p>
+      <div id="ticketList" class="ticket-list"></div>
+      <label class="generation-label" for="ticketName">Añadir ticket (tienda o fecha)</label>
+      <input id="ticketName" class="generation-input" type="text" placeholder="Ej.: Compra del 3 de noviembre">
+      <label class="generation-label" for="ticketPhoto">Leer foto del ticket</label>
+      <input id="ticketPhoto" class="generation-input" type="file" accept="image/jpeg,image/png,image/webp,image/bmp,image/tiff" capture="environment">
+      <p class="ticket-privacy-note">La foto se procesa en este dispositivo. El lector se descarga al usarlo; puedes revisar y corregir el resultado antes de guardarlo.</p>
+      <button type="button" id="readTicket" class="secondary-button">Leer foto</button>
+      <p id="ticketReadStatus" class="ticket-status" role="status" aria-live="polite"></p>
+      <label class="generation-label" for="ticketProducts">Productos detectados · edítalos antes de guardar</label>
+      <textarea id="ticketProducts" class="generation-textarea" rows="5" placeholder="Un producto por línea. También puedes escribirlos o pegarlos aquí."></textarea>
+      <button type="button" id="saveTicket" class="secondary-button">Guardar ticket</button>
+      <h3>Básicos que confirmo tener</h3>
+      <p>Esta lista se edita aquí. Solo cuentan los que marques disponibles.</p>
+      <div id="basicsList" class="basics-list"></div>
+      <label class="generation-label" for="newBasic">Añadir básico</label>
+      <div class="basic-add-row"><input id="newBasic" class="generation-input" type="text" placeholder="Ej.: Pimienta negra"><button type="button" id="addBasic" class="secondary-button">Añadir</button></div>
+      <div id="shoppingPreview" class="shopping-preview" hidden></div>
+    </section>
+    <div class="generation-actions"><button type="button" id="cancelGeneration" class="secondary-button">Cancelar</button><button type="button" id="confirmGeneration" class="primary-button">Generar mes</button></div>
+  </dialog>
   <dialog id="recipeDialog" class="recipe-dialog" aria-labelledby="recipeTitle">
     <form method="dialog"><button class="close-button" aria-label="Cerrar">×</button></form>
     <div class="eyebrow" id="recipeKind">RECETA</div><h2 id="recipeTitle"></h2>
@@ -98,6 +132,9 @@
   <script src="catalog-data.js"></script>
   <script src="catalog-overrides.js"></script>
   <script src="portions.js"></script>
+  <script src="recipe-content.js"></script>
+  <script src="ticket-tools.js"></script>
+  <script src="ticket-ocr.js"></script>
   <script src="app.js"></script>
   <script src="pwa.js"></script>
 </body>

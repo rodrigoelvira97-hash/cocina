@@ -624,21 +624,21 @@ window.COCINA_FAMILY_PATHS = [
       "Carne",
       "Pollo"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Tacos de carne picada",
     "path": [
       "Carne"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Tacos de carne desmechada",
     "path": [
       "Carne"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Arroz con atún/calamares",
@@ -983,14 +983,14 @@ window.COCINA_FAMILY_PATHS = [
     "path": [
       "Sopas"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Sopa Cebolla",
     "path": [
       "Sopas"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Migas del pastor",
@@ -1031,6 +1031,7 @@ window.COCINA_FAMILY_PATHS = [
     "recipe": "Chorizo a la sidra",
     "path": [
       "Carne",
+      "Cerdo",
       "Chorizos"
     ],
     "classification": "confirmed"
@@ -1041,7 +1042,7 @@ window.COCINA_FAMILY_PATHS = [
       "Carne",
       "Salchichas"
     ],
-    "classification": "rule"
+    "classification": "confirmed"
   },
   {
     "recipe": "Guacamole",
@@ -1119,7 +1120,13 @@ window.COCINA_VARIANT_GROUPS = [
           "Vino blanco",
           "Pimentón dulce",
           "Tomate rallado"
-        ]
+        ],
+        "familyReview": {
+          "status": "confirmado",
+          "sourceCase": "tacos_familias_por_relleno",
+          "confirmedAt": "2026-10-30T10:40:48.705516+00:00",
+          "source": "Respuesta explícita del usuario en la ronda 40 de la auditoría."
+        }
       },
       {
         "key": "tacos-carne-picada",
@@ -1132,7 +1139,13 @@ window.COCINA_VARIANT_GROUPS = [
         "ingredients": [
           "Carne picada"
         ],
-        "processReference": "Tacos de pollo"
+        "processReference": "Tacos de pollo",
+        "familyReview": {
+          "status": "confirmado",
+          "sourceCase": "tacos_familias_por_relleno",
+          "confirmedAt": "2026-10-30T10:40:48.705516+00:00",
+          "source": "Respuesta explícita del usuario en la ronda 40 de la auditoría."
+        }
       },
       {
         "key": "tacos-carne-desmechada",
@@ -1145,7 +1158,13 @@ window.COCINA_VARIANT_GROUPS = [
         "optionalEnd": true,
         "ingredients": [
           "Carne para desmechar"
-        ]
+        ],
+        "familyReview": {
+          "status": "confirmado",
+          "sourceCase": "tacos_familias_por_relleno",
+          "confirmedAt": "2026-10-30T10:40:48.705516+00:00",
+          "source": "Respuesta explícita del usuario en la ronda 40 de la auditoría."
+        }
       }
     ]
   }
@@ -1228,7 +1247,7 @@ window.COCINA_RECIPE_PORTIONS = [
     "basePeople": 1,
     "coverage": "partial",
     "review": {
-      "status": "pending_owner_validation"
+      "status": "confirmed"
     },
     "quantities": [
       {
@@ -1264,6 +1283,378 @@ window.COCINA_RECIPE_PORTIONS = [
         "evidence": "a la plancha uno o dos gambones por cabeza."
       }
     ],
-    "note": "El montado especial es una preparación opcional."
+    "note": "El montado especial es una preparación opcional.",
+    "statusText": "Cantidades parciales validadas; faltan el pescado y otros ingredientes."
+  }
+];
+window.COCINA_RECIPE_CONTENT = [
+  {
+    "name": "Albóndigas",
+    "sourceBody": "Ingredientes:\nCarne picada:\nTernera 75%\nCerdo 25%\nAjo\nCebolla\nCayena\nHarina\nVino blanco\nCaldo de carne\nPreparado carne:\nMezclar ambas carnes\nAjo en polvo\nPimienta molida\nMiga de pan mojada en leche\nVino blanco\nHuevo (yema y clara)\nPreparado de albóndigas:\nHacer bolas no demasiado compactas para que queden más tiernas\nHarinar las albóndigas\nFreír a fuego suave-medio en la sartén donde vayamos a hacer el sofrito después\nUna vez estén doradas en toda su superficie sacar las albóndigas y despegar bien la harina que se haya podido pegar en el fondo.\nPreparado final:\nEn donde hemos frito las albóndigas hacemos el sofrito: ajo, cebolla y cayena a fuego flojo (unos 20 min).\nAñadimos harina al gusto para darle el espesor que queramos y tostamos con cuidado de no quemar.\nAñadimos vino blanco y desglasamos el fondo de la sartén. Dejamos reducir a fuego flojo (unos 15-20 min).\nAñadimos las albóndigas justo antes de que se reduzca todo el vino y movemos con cuidado para que la salsa se ligue a las albóndigas sin romperse.\nAñadimos el caldo de carne hecho previamente y dejamos un total de unos 35-40 min a fuego lento moviendo las albóndigas cada 5 minutos más o menos para que queden bien cocinadas por todos lados de forma uniforme.",
+    "blocks": [
+      {
+        "type": "heading",
+        "text": "Ingredientes",
+        "level": 3
+      },
+      {
+        "type": "heading",
+        "text": "Mezcla de carne",
+        "level": 4
+      },
+      {
+        "type": "ingredients",
+        "items": [
+          {
+            "text": "Carne picada",
+            "children": [
+              "Ternera 75%",
+              "Cerdo 25%"
+            ]
+          },
+          "Ajo en polvo",
+          "Pimienta molida",
+          "Miga de pan mojada en leche",
+          "Vino blanco",
+          "Huevo (yema y clara)"
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Salsa y acabado",
+        "level": 4
+      },
+      {
+        "type": "ingredients",
+        "items": [
+          "Ajo",
+          "Cebolla",
+          "Cayena",
+          "Harina",
+          "Vino blanco",
+          "Caldo de carne"
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Preparación",
+        "level": 3
+      },
+      {
+        "type": "heading",
+        "text": "Mezcla de la carne",
+        "level": 4
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Mezclar ambas carnes"
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Formado y fritura",
+        "level": 4
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Hacer bolas no demasiado compactas para que queden más tiernas",
+          "Harinar las albóndigas",
+          "Freír a fuego suave-medio en la sartén donde vayamos a hacer el sofrito después",
+          "Una vez estén doradas en toda su superficie sacar las albóndigas y despegar bien la harina que se haya podido pegar en el fondo."
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Guiso final",
+        "level": 4
+      },
+      {
+        "type": "steps",
+        "items": [
+          "En donde hemos frito las albóndigas hacemos el sofrito: ajo, cebolla y cayena a fuego flojo (unos 20 min).",
+          "Añadimos harina al gusto para darle el espesor que queramos y tostamos con cuidado de no quemar.",
+          "Añadimos vino blanco y desglasamos el fondo de la sartén. Dejamos reducir a fuego flojo (unos 15-20 min).",
+          "Añadimos las albóndigas justo antes de que se reduzca todo el vino y movemos con cuidado para que la salsa se ligue a las albóndigas sin romperse.",
+          "Añadimos el caldo de carne hecho previamente y dejamos un total de unos 35-40 min a fuego lento moviendo las albóndigas cada 5 minutos más o menos para que queden bien cocinadas por todos lados de forma uniforme."
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Chipirones",
+    "sourceBody": "Preparado\nDoramos los chipirones en la olla donde vayamos a cocinarlos, a fuego fuerte no más de 30 segundos por cada lado y habiendo espolvoreado aceite sobre la superficie de la olla.\nSacamos los chipirones.\nEchamos aceite de oliva y sofreímos ajo y cebolla a fuego suave hasta que caramelice.\nDesglasamos con vino blanco y añadimos pimentón dulce. No echaremos harina ya que los chipirones sueltan gelatina y la salsa resultante ya será bastante espesa.\nEcharemos los chipirones a fuego flojo, mezclaremos bien todos los productos y echaremos más vino blanco dejándolo a fuego suave unos 20 minutos hasta que la salsa sea consistente y no tan liquida.",
+    "blocks": [
+      {
+        "type": "heading",
+        "text": "Ingredientes",
+        "level": 3
+      },
+      {
+        "type": "ingredients",
+        "items": [
+          "Chipirones",
+          "Aceite de oliva",
+          "Ajo",
+          "Cebolla",
+          "Vino blanco",
+          "Pimentón dulce"
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Preparación",
+        "level": 3
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Doramos los chipirones en la olla donde vayamos a cocinarlos, a fuego fuerte no más de 30 segundos por cada lado y habiendo espolvoreado aceite sobre la superficie de la olla.",
+          "Sacamos los chipirones.",
+          "Echamos aceite de oliva y sofreímos ajo y cebolla a fuego suave hasta que caramelice.",
+          "Desglasamos con vino blanco y añadimos pimentón dulce. No echaremos harina ya que los chipirones sueltan gelatina y la salsa resultante ya será bastante espesa.",
+          "Echaremos los chipirones a fuego flojo, mezclaremos bien todos los productos y echaremos más vino blanco dejándolo a fuego suave unos 20 minutos hasta que la salsa sea consistente y no tan liquida."
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Salchichas encebolladas",
+    "sourceBody": "Ingredientes:\nSalchichas o longanizas.\nAjo.\nCebolla.\nCayena.\nVino blanco o tinto.\nPimentón dulce.\nCaldo de carne/pollo\nPreparado:\nSofrito a fuego lento con ajos y cebolla en juliana y cayena.\nDesglasar el caramelizado con vino blanco o tinto.\nHarina (opcional), con la gelatina de las salchichas la salsa ya quedará espesa pero podemos darle más.\nPimentón dulce y meter las salchichas y remover hasta que se impregne bien y echamos un dedo de vino.\nCuando el vino se reduzca metemos el caldo y dejaremos cociendo a fuego flojo 10 minutos, dependiendo de cómo quede la salsa subiremos el fuego o cortaremos la cocción.",
+    "blocks": [
+      {
+        "type": "heading",
+        "text": "Ingredientes",
+        "level": 3
+      },
+      {
+        "type": "ingredients",
+        "items": [
+          "Salchichas o longanizas.",
+          "Ajo.",
+          "Cebolla.",
+          "Cayena.",
+          "Vino blanco o tinto.",
+          "Pimentón dulce.",
+          "Caldo de carne/pollo",
+          "Harina (opcional)"
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Preparación",
+        "level": 3
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Sofrito a fuego lento con ajos y cebolla en juliana y cayena.",
+          "Desglasar el caramelizado con vino blanco o tinto.",
+          "Harina (opcional), con la gelatina de las salchichas la salsa ya quedará espesa pero podemos darle más.",
+          "Pimentón dulce y meter las salchichas y remover hasta que se impregne bien y echamos un dedo de vino.",
+          "Cuando el vino se reduzca metemos el caldo y dejaremos cociendo a fuego flojo 10 minutos, dependiendo de cómo quede la salsa subiremos el fuego o cortaremos la cocción."
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Ceviche",
+    "sourceBody": "Pescados\nPescados para ceviche:\nCorvina\nLubina\nMero\nPez limón\nCaballa (si tenemos la leche de tigre ya preparada. Si tenemos que hacer el fondo o fumet nunca lo haremos con caballa)\nFumet\nIngredientes:\nRestos del pescado\nCebolla\nApio\nPuerro\nNabo (opcional)\nNo dorar la verdura, ni las espinas y ni la cabeza en la olla (esto no sería un fumet, sería un fondo de pescado). El fumet tiene que quedar lo más blanco/limpio posible.\nLlenar de agua (más o menos medio litro por cada 200 gramos de espinas y cabeza)\nCon todos los ingredientes dentro encendemos el fuego y llevamos a ebullición. Las diferentes temperaturas liberarán los diferentes aromas de los distintos ingredientes.\nLlevar a ebullición y entonces bajar el fuego al mínimo que siga hirviendo. Mantener la cocción durante 25 minutos aprox. (desde que empieza a hervir) e ir retirando las impurezas (espuma marrón grisácea). Colar todo hasta que quede un caldo limpio y dejar reposar y enfriar. Dejaremos unas horas en la nevera o incluso el día antes de preparar el ceviche.\nImportante: el fumet quedará muy gelatinoso por el colágeno del pescado (espinas y cabeza), esto no es un problema, al hacer la leche de tigre final se hará más líquido (al colarlo veremos que nos cuesta, porque sigue siendo espesa) y en el montado final tendrá una textura liquida, pero con cuerpo.\nCuanto más colágeno tenga más gelatinoso será. Por debajo de los 25º aparece viscosidad y cuaja en la nevera.\nDejaremos reposar hasta que alcance temperatura ambiente o unos 10º para empezar a manipular con el resto de la leche de tigre.\nLeche de tigre\nJugo de lima en un bol con un cubo de hielo.\nApio fresco cortado en trozos.\nCebolla morada cortada. Poca cantidad.\nAjo (sin miedo) molido con mortero con un pelín de sal.\nJengibre fresco cortado en láminas.\nPescado fresco (un par de trocitos para potenciar el sabor y darle textura). Serán las partes pegadas a la cola y la cabeza, ya que son las partes más fibrosas y menos agradables al paladar por su textura, pero si aptas para dar sabor.\nSazonamos con sal.\nRemovemos bien para que los ingredientes suelten sus aromas y sabores.\nIncorporamos a la licuadora.\nIncorporamos el Fumet de pescado hecho anteriormente. Normalmente, por el colágeno del pescado, quedará una capa superior más gelatinosa y otra inferior más liquida, hay que conseguir homogeneizarla.\nTrituramos bien y cuando este todo bien triturado incorporamos la parte aromática.\nPicante (fresco). Muy poco, ya que añadiremos en el montado final. Si le echamos picante seco perderemos la frescura característica del ceviche. Recomendaciones:\nAjí limo (ceviche tradicional y picante moderado)\nRocoto (ceviche con mariscos y pica más)\nCilantro fresco.\nVolveremos a triturar. Esta vez brevemente (unos 3 o 4 segundos) solo para romper los ingredientes y que liberen sus aromas.\nColaremos la mezcla para obtener una leche de tigre limpia, ligera y aromática buscando el mayor equilibrio posible entre:\nFrescura\nAcidez\nPicante\nRecomendación. Hacer un bote que podamos usar para todos los montados finales que queramos. Podremos congelarla entendiendo que es posible que pierda calidad. Indispensable descongelarla en frio y tomarla una vez descongelada y no volver a congelar.\nImportante: si está demasiado gelatinoso lo diluiremos con ácido y agua fría (hielos, que además quitará algo de acidez)\nMontado final\nPrepararemos un bol de aluminio, a poder ser (conduce mejor el calor/frio), sobre otro más grande que tendremos lleno de hielo.\nAgregaremos el pescado cortado en dados. Salar (sin miedo) y remover durante medio minuto para que la sal deshidrate ligeramente la superficie del pescado y ayude a fijar su textura.\nAgregar ají limo en medallones finos y remover (con dos medallones es suficiente).\nAgregar el cilantro arrancado con la mano en trozos pequeños y remover.\nApio muy picado (hacer prueba-opcional)\nAgregar la cebolla morada cortada en juliana (previamente habiendo estado en remojo con hielos durante un rato para que esta quede con mejor textura y crujiente) y remover.\nProcuramos aplastar un poco los ingredientes anteriores para que suelten sus jugos y sus aromas.\nRemovemos durante un minuto todo.\nExprimimos lima fresca directamente sobre el pescado mientras removemos para que se marine de forma uniforme.\nAñadir la leche de tigre (6 cucharadas por ración), remover bien y rectificar de sazón. Dejaremos reposar a temperatura ambiente hasta que sea más liquida, ya que en frio será gelatinosa.\nServir inmediatamente.\nMontado especial\nMeteremos gambas o langostinos pequeños (congelados previamente) a la leche de tigre (triturados con el pescado) y otras incorporadas al final como el resto de pescado (3 o 4 por cabeza).\nHaremos, a parte, a la plancha uno o dos gambones por cabeza. De las cabezas sacaremos un jugo que incorporaremos a la mezcla final.\nServiremos en vasos de margarita y con cuchara pequeña.\nNo macerar el pescado y las gambitas en la leche de tigre, se debe servir 2 o 3 minutos antes de consumir ya que si no se cocinara mucho con los cítricos y el pescado perderá su sabor y el cítrico se comerá casi todo el sabor.\nLe pondremos la cebolla en juliana en la base de la copa e incorporaremos la leche de tigre.\nMojaremos cada gambón en el jugo de los gambones y los colgaremos en el borde de cada copa.\nPondremos 2 patacones o 2 nachos redondos en la copa.",
+    "blocks": [
+      {
+        "type": "raw",
+        "text": "Pescados\nPescados para ceviche:\nCorvina\nLubina\nMero\nPez limón\nCaballa (si tenemos la leche de tigre ya preparada. Si tenemos que hacer el fondo o fumet nunca lo haremos con caballa)"
+      },
+      {
+        "type": "heading",
+        "text": "Fumet",
+        "level": 3
+      },
+      {
+        "type": "heading",
+        "text": "Ingredientes",
+        "level": 4
+      },
+      {
+        "type": "ingredients",
+        "items": [
+          "Restos del pescado",
+          "Cebolla",
+          "Apio",
+          "Puerro",
+          "Nabo (opcional)",
+          "Agua"
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Preparación",
+        "level": 4
+      },
+      {
+        "type": "steps",
+        "items": [
+          "No dorar la verdura, ni las espinas y ni la cabeza en la olla (esto no sería un fumet, sería un fondo de pescado). El fumet tiene que quedar lo más blanco/limpio posible.",
+          "Llenar de agua (más o menos medio litro por cada 200 gramos de espinas y cabeza)",
+          "Con todos los ingredientes dentro encendemos el fuego y llevamos a ebullición. Las diferentes temperaturas liberarán los diferentes aromas de los distintos ingredientes.",
+          "Llevar a ebullición y entonces bajar el fuego al mínimo que siga hirviendo. Mantener la cocción durante 25 minutos aprox. (desde que empieza a hervir) e ir retirando las impurezas (espuma marrón grisácea). Colar todo hasta que quede un caldo limpio y dejar reposar y enfriar. Dejaremos unas horas en la nevera o incluso el día antes de preparar el ceviche.",
+          "Dejaremos reposar hasta que alcance temperatura ambiente o unos 10º para empezar a manipular con el resto de la leche de tigre."
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Recomendaciones",
+        "level": 4
+      },
+      {
+        "type": "note",
+        "text": "Importante: el fumet quedará muy gelatinoso por el colágeno del pescado (espinas y cabeza), esto no es un problema, al hacer la leche de tigre final se hará más líquido (al colarlo veremos que nos cuesta, porque sigue siendo espesa) y en el montado final tendrá una textura liquida, pero con cuerpo."
+      },
+      {
+        "type": "note",
+        "text": "Cuanto más colágeno tenga más gelatinoso será. Por debajo de los 25º aparece viscosidad y cuaja en la nevera."
+      },
+      {
+        "type": "heading",
+        "text": "Leche de tigre",
+        "level": 3
+      },
+      {
+        "type": "heading",
+        "text": "Ingredientes",
+        "level": 4
+      },
+      {
+        "type": "ingredients",
+        "items": [
+          "Lima",
+          "Hielo",
+          "Apio fresco cortado en trozos.",
+          "Cebolla morada cortada. Poca cantidad.",
+          "Ajo (sin miedo) molido con mortero con un pelín de sal.",
+          "Sal",
+          "Jengibre fresco cortado en láminas.",
+          "Pescado fresco (un par de trocitos para potenciar el sabor y darle textura). Serán las partes pegadas a la cola y la cabeza, ya que son las partes más fibrosas y menos agradables al paladar por su textura, pero si aptas para dar sabor.",
+          "Fumet de pescado",
+          "Picante fresco",
+          "Cilantro fresco."
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Preparación",
+        "level": 4
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Jugo de lima en un bol con un cubo de hielo.",
+          "Sazonamos con sal.",
+          "Removemos bien para que los ingredientes suelten sus aromas y sabores.",
+          "Incorporamos a la licuadora.",
+          "Incorporamos el Fumet de pescado hecho anteriormente. Normalmente, por el colágeno del pescado, quedará una capa superior más gelatinosa y otra inferior más liquida, hay que conseguir homogeneizarla.",
+          "Trituramos bien y cuando este todo bien triturado incorporamos la parte aromática.",
+          "Volveremos a triturar. Esta vez brevemente (unos 3 o 4 segundos) solo para romper los ingredientes y que liberen sus aromas.",
+          {
+            "text": "Colaremos la mezcla para obtener una leche de tigre limpia, ligera y aromática buscando el mayor equilibrio posible entre:",
+            "children": [
+              "Frescura",
+              "Acidez",
+              "Picante"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Recomendaciones",
+        "level": 4
+      },
+      {
+        "type": "note",
+        "text": "Picante (fresco). Muy poco, ya que añadiremos en el montado final. Si le echamos picante seco perderemos la frescura característica del ceviche. Recomendaciones:"
+      },
+      {
+        "type": "bullets",
+        "items": [
+          "Ají limo (ceviche tradicional y picante moderado)",
+          "Rocoto (ceviche con mariscos y pica más)"
+        ]
+      },
+      {
+        "type": "note",
+        "text": "Recomendación. Hacer un bote que podamos usar para todos los montados finales que queramos. Podremos congelarla entendiendo que es posible que pierda calidad. Indispensable descongelarla en frio y tomarla una vez descongelada y no volver a congelar."
+      },
+      {
+        "type": "note",
+        "text": "Importante: si está demasiado gelatinoso lo diluiremos con ácido y agua fría (hielos, que además quitará algo de acidez)"
+      },
+      {
+        "type": "raw",
+        "text": "Montado final\nPrepararemos un bol de aluminio, a poder ser (conduce mejor el calor/frio), sobre otro más grande que tendremos lleno de hielo.\nAgregaremos el pescado cortado en dados. Salar (sin miedo) y remover durante medio minuto para que la sal deshidrate ligeramente la superficie del pescado y ayude a fijar su textura.\nAgregar ají limo en medallones finos y remover (con dos medallones es suficiente).\nAgregar el cilantro arrancado con la mano en trozos pequeños y remover.\nApio muy picado (hacer prueba-opcional)\nAgregar la cebolla morada cortada en juliana (previamente habiendo estado en remojo con hielos durante un rato para que esta quede con mejor textura y crujiente) y remover.\nProcuramos aplastar un poco los ingredientes anteriores para que suelten sus jugos y sus aromas.\nRemovemos durante un minuto todo.\nExprimimos lima fresca directamente sobre el pescado mientras removemos para que se marine de forma uniforme.\nAñadir la leche de tigre (6 cucharadas por ración), remover bien y rectificar de sazón. Dejaremos reposar a temperatura ambiente hasta que sea más liquida, ya que en frio será gelatinosa.\nServir inmediatamente.\nMontado especial\nMeteremos gambas o langostinos pequeños (congelados previamente) a la leche de tigre (triturados con el pescado) y otras incorporadas al final como el resto de pescado (3 o 4 por cabeza).\nHaremos, a parte, a la plancha uno o dos gambones por cabeza. De las cabezas sacaremos un jugo que incorporaremos a la mezcla final.\nServiremos en vasos de margarita y con cuchara pequeña.\nNo macerar el pescado y las gambitas en la leche de tigre, se debe servir 2 o 3 minutos antes de consumir ya que si no se cocinara mucho con los cítricos y el pescado perderá su sabor y el cítrico se comerá casi todo el sabor.\nLe pondremos la cebolla en juliana en la base de la copa e incorporaremos la leche de tigre.\nMojaremos cada gambón en el jugo de los gambones y los colgaremos en el borde de cada copa.\nPondremos 2 patacones o 2 nachos redondos en la copa."
+      }
+    ]
+  },
+  {
+    "name": "Pincho de solomillo de cerdo",
+    "sourceBody": "Ingredientes:\nSolomillo de cerdo\nAjo en polvo\nPimienta negra\nVino blanco\nTosta de pan\nQueso rallado\nCebolla blanca\nJalapeño\nHuevo de codorniz\nNota: Ingredientes identificados en el texto de preparación. Las cantidades siguen pendientes de completar.\nPreparación del solomillo:\nEchar ajo en polvo, pimienta negra y dorarlo en la sartén. Una vez dorado echar vino blanco y seguir haciendo a fuego flojo hasta que reduzca. Cuando haya reducido sacarlo y cortarlo en medallones. Veremos que aun este crudo, pero no importa porque lo meteremos al horno montándolo en el pincho ya preparado.\nMontaje del pincho:\nTosta de pan fina pero lo suficientemente ancha para resistir y no romperse (tener en cuenta que tiene que entrar en la boca y el solomillo tendrá unos 2 cm de altura). \nPoner queso rallado encima.\nPoner el medallón del solomillo encima.\nPoner cebolla blanca cortada en juliana encima (2 o 3).\nPoner un jalapeño encima.\nPoner un huevo de codorniz frito encima.",
+    "blocks": [
+      {
+        "type": "heading",
+        "text": "Ingredientes",
+        "level": 3
+      },
+      {
+        "type": "ingredients",
+        "items": [
+          "Solomillo de cerdo",
+          "Ajo en polvo",
+          "Pimienta negra",
+          "Vino blanco",
+          "Tosta de pan",
+          "Queso rallado",
+          "Cebolla blanca",
+          "Jalapeño",
+          "Huevo de codorniz"
+        ]
+      },
+      {
+        "type": "note",
+        "text": "Nota: Ingredientes identificados en el texto de preparación. Las cantidades siguen pendientes de completar."
+      },
+      {
+        "type": "heading",
+        "text": "Preparación del solomillo",
+        "level": 3
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Echar ajo en polvo, pimienta negra y dorarlo en la sartén. Una vez dorado echar vino blanco y seguir haciendo a fuego flojo hasta que reduzca. Cuando haya reducido sacarlo y cortarlo en medallones. Veremos que aun este crudo, pero no importa porque lo meteremos al horno montándolo en el pincho ya preparado."
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Montaje y horneado",
+        "level": 3
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Tosta de pan fina pero lo suficientemente ancha para resistir y no romperse (tener en cuenta que tiene que entrar en la boca y el solomillo tendrá unos 2 cm de altura).",
+          "Poner queso rallado encima.",
+          "Poner el medallón del solomillo encima.",
+          "Poner cebolla blanca cortada en juliana encima (2 o 3).",
+          "Poner un jalapeño encima.",
+          "Hornear el pincho montado antes de añadir el huevo de codorniz frito.",
+          "Poner un huevo de codorniz frito encima."
+        ]
+      },
+      {
+        "type": "note",
+        "text": "Temperatura y tiempo de horneado pendientes de concretar."
+      }
+    ]
   }
 ];

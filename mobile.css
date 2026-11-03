@@ -101,3 +101,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .dialog-footer span { font-size: 12px; line-height: 1.5; }
   .alerts { font-size: 13px; line-height: 1.55; }
 }
+
+@media (max-width: 700px) {
+  .generation-dialog { width: calc(100vw - 16px); max-height: calc(100dvh - 24px); padding: 23px 17px calc(18px + env(safe-area-inset-bottom)); border-radius: 16px; }
+  .generation-dialog h2 { font-size: 25px; }
+  .generation-label { font-size: 14px; }
+  .generation-select, .generation-input, .generation-textarea { font-size: 16px; min-height: 48px; }
+  .generation-actions { bottom: calc(-18px - env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); }
+  .generation-actions button { flex: 1; min-height: 50px; font-size: 15px; }
+  .ticket-entry, .basic-entry { font-size: 14px; min-height: 48px; }
+}
